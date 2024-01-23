@@ -18,7 +18,7 @@ green_color_profile = "\033[32m"     # Green text
 yellow_color_profile = "\033[33m"    # Yellow text
 blue_color_profile = "\033[34m"      # Blue text
 purple_color_profile = "\033[35m"    # Purple text
-reset_color_profile = "\033[0m"      # Default CLI text color
+reset_color_profile = "\033[0m"      # Default CLI text colors
 
 
 def farewell():
