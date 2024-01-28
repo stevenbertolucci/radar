@@ -11,6 +11,8 @@
 #       feature that users can generate for personal use.
 #
 #  -------------------------------------------------------------------
+import os
+import time
 
 # Define ANSI escape codes for colors
 red_color_profile = "\033[31m"       # Red text
@@ -57,6 +59,8 @@ print(f"\n\t\t\t\t{red_color_profile}Copyrighted by Steven Bertolucci\u00A9")
 print(f"{green_color_profile}-----------------------------------------------------------------------------------------"
       f"---------------------{reset_color_profile}")
 
+input("\n\n\n\n\t\t         \U0001F44B Welcome to Radar! Press 'enter' to continue...")
+
 user_input = input(f"\n{yellow_color_profile}Enter a zip code: {reset_color_profile}")
 
 if user_input.lower() == 'quit':
@@ -73,9 +77,39 @@ while True:
     print("\t7. Exit\n")
 
     user_choice = input(f"{yellow_color_profile}Pick an option: {reset_color_profile}")
+
     if user_choice.lower() == 'quit':
         farewell()
+        time.sleep(3)
+        os.system('cls')
         break
+
+    elif user_choice == '1':
+        input("Weather Info Coming soon... Press Enter to Continue")
+        os.system('cls')
+
+    elif user_choice == '2':
+        input("Local News Info Coming soon... Press Enter to continue")
+        os.system('cls')
+
+    elif user_choice == '3':
+        input("Time Zone Info Coming soon... Press Enter to continue")
+        os.system('cls')
+
+    elif user_choice == '4':
+        input("Tax Rates Info Coming soon... Press Enter to continue")
+        os.system('cls')
+
+    elif user_choice == '5':
+        user_input = input("Enter New Zip Code: ")
+        os.system('cls')
+
+    elif user_choice == '6':
+        input("Password Generator Coming soon... Press Enter to continue")
+        os.system('cls')
+
     elif user_choice == '7':
         farewell()
+        time.sleep(3)
+        os.system('cls')
         break
