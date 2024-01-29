@@ -12,7 +12,9 @@
 #
 #  -------------------------------------------------------------------
 import os
+import sys
 import time
+import requests
 
 # Define ANSI escape codes for colors
 red_color_profile = "\033[31m"       # Red text
@@ -27,6 +29,11 @@ def farewell():
     print(f"\n\t\t\t     \U0001F44B{yellow_color_profile} Thank you for using Radar! Bye! \U0001F44B "
           f"{reset_color_profile}\n\n")
     return
+
+
+def clear_selected_line():
+    sys.stdout.write("\033[F")       # Move cursor up one line
+    sys.stdout.write("\033[K")       # Clear line from cursor position to the end
 
 
 print(f"{green_color_profile}-----------------------------------------------------------------------------------------"
@@ -93,7 +100,24 @@ while True:
         os.system('cls')
 
     elif user_choice == '3':
-        input("Time Zone Info Coming soon... Press Enter to continue")
+        print("\033[31mRetrieving time information. Please wait... \033[0m")
+        url = "https://timeapi.io/api/Time/current/zone"
+
+        parameters = {
+            "format": "json",
+            "timeZone": "America/Los_Angeles"
+        }
+
+        response = requests.get(url, params=parameters)
+
+        if response.status_code == 200:
+            clear_selected_line()
+            data = response.json()
+            print("\033[36mTime Zone:\033[0m", data)
+        else:
+            print(f"Error: {response.status_code}")
+
+        input("\nPress Enter to continue...")
         os.system('cls')
 
     elif user_choice == '4':
