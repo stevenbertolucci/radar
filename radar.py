@@ -308,7 +308,10 @@ while True:
 
         user_choice = input(f"{yellow_color_profile}Pick an option: {reset_color_profile}")
 
-        if user_choice < '1' or user_choice > '7':
+        if user_choice == 'quit':
+            os.system('cls')
+            farewell()
+        elif user_choice < '1' or user_choice > '7':
             clear_selected_line()
             print("\033[31mPlease pick a valid option.\033[0m")
             continue
