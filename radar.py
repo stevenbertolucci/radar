@@ -273,10 +273,6 @@ input("\n\n\n\n\t\t\t             \U0001F44B Welcome to Radar! Press 'enter' to 
 clear_selected_line()
 
 while True:
-    clear_selected_line()
-    clear_selected_line()
-    clear_selected_line()
-    clear_selected_line()
 
     # Get User input
     user_input = input(f"\n{yellow_color_profile}Enter a zip code: {reset_color_profile}")
