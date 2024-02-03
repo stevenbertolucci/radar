@@ -14,7 +14,11 @@
 import os
 import sys
 import time
+import platform
 import requests
+
+# Get operating system name
+operating_system = sys.platform
 
 # Define ANSI escape codes for colors
 red_color_profile = "\033[31m"       # Red text
@@ -78,7 +82,10 @@ def farewell():
     print(f"\n\t\t\t\t         \U0001F44B{yellow_color_profile} Thank you for using Radar! Bye! \U0001F44B "
           f"{reset_color_profile}\n\n")
     time.sleep(3)
-    os.system('cls')
+    if operating_system == 'windows':
+        os.system('cls')
+    if operating_system == 'linux':
+        os.system('clear')
     exit(0)
 
 
@@ -89,7 +96,10 @@ def validate_input(usr_input):
     """
 
     if usr_input.lower() == 'quit':
-        os.system('cls')
+        if operating_system == 'windows':
+            os.system('cls')
+        if operating_system == 'linux':
+            os.system('clear')
         farewell()
         time.sleep(3)
         exit(0)
@@ -176,7 +186,10 @@ def get_weather():
         print("Error retrieving weather")
 
     input("\n\033[32mPress Enter to Continue...\033[0m")
-    os.system('cls')
+    if operating_system == 'windows':
+        os.system('cls')
+    if operating_system == 'linux':
+        os.system('clear')
 
 
 def get_local_news():
@@ -201,7 +214,10 @@ def get_local_news():
         print(f"Error: {response.status_code}")
 
     input("\n\033[32mPress Enter to continue...\033[0m")
-    os.system('cls')
+    if operating_system == 'windows':
+        os.system('cls')
+    if operating_system == 'linux':
+        os.system('clear')
 
 
 def get_time():
@@ -230,7 +246,10 @@ def get_time():
         print(f"Error: {response.status_code}")
 
     input("\n\033[32mPress Enter to continue...\033[0m")
-    os.system('cls')
+    if operating_system == 'windows':
+        os.system('cls')
+    if operating_system == 'linux':
+        os.system('clear')
 
 
 def get_tax_rates():
@@ -256,7 +275,10 @@ def get_tax_rates():
         print(f"Error: {response.status_code}")
 
     input("\n\033[32mPress Enter to continue...\033[0m")
-    os.system('cls')
+    if operating_system == 'windows':
+        os.system('cls')
+    if operating_system == 'linux':
+        os.system('clear')
 
 ########################################################################################################################
 #                                                                                                                      #
@@ -290,7 +312,10 @@ get_location_details()
 
 while True:
     if has_displayed_intro:
-        os.system('cls')
+        if operating_system == 'windows':
+            os.system('cls')
+        if operating_system == 'linux':
+            os.system('clear')
         display_intro()
     print("\n\t1. Weather\n")
     print("\t2. Local News\n")
@@ -305,19 +330,28 @@ while True:
         user_choice = input(f"{yellow_color_profile}Pick an option: {reset_color_profile}")
 
         if user_choice == 'quit':
-            os.system('cls')
+            if operating_system == 'windows':
+                os.system('cls')
+            if operating_system == 'linux':
+                os.system('clear')
             farewell()
         elif user_choice < '1' or user_choice > '7':
             clear_selected_line()
             print("\033[31mPlease pick a valid option.\033[0m")
             continue
         else:
-            os.system('cls')
+            if operating_system == 'windows':
+                os.system('cls')
+            if operating_system == 'linux':
+                os.system('clear')
             display_intro()
             break
 
     if user_choice.lower() == 'quit':
-        os.system('cls')
+        if operating_system == 'windows':
+            os.system('cls')
+        if operating_system == 'linux':
+            os.system('clear')
         farewell()
 
     elif user_choice == '1':
@@ -332,10 +366,16 @@ while True:
     elif user_choice == '4':
         # get_tax_rates()
         input("Tax Rates Info Coming soon... Press Enter to continue")
-        os.system('cls')
+        if operating_system == 'windows':
+            os.system('cls')
+        if operating_system == 'linux':
+            os.system('clear')
 
     elif user_choice == '5':
-        os.system('cls')
+        if operating_system == 'windows':
+            os.system('cls')
+        if operating_system == 'linux':
+            os.system('clear')
         display_intro()
         while True:
             user_input = input("\033[33mEnter New Zip Code: \033[0m")
@@ -347,8 +387,14 @@ while True:
 
     elif user_choice == '6':
         input("Password Generator Coming soon... Press Enter to continue")
-        os.system('cls')
+        if operating_system == 'windows':
+            os.system('cls')
+        if operating_system == 'linux':
+            os.system('clear')
 
     elif user_choice == '7':
-        os.system('cls')
+        if operating_system == 'windows':
+            os.system('cls')
+        if operating_system == 'linux':
+            os.system('clear')
         farewell()
