@@ -97,6 +97,12 @@ def farewell():
 
 
 def authentication():
+    """
+        Function authentication generates am access token for
+        verified Precisely users and then returns the token
+        for API calls.
+    """
+
     # Encode your API Key and Secret
     base64 = "NkIzVmFHSlF2RWg5em1sbmhaNXRBYVNGcGFzVnlEa0c6MEdXejUwQ3ZDYXdPbmNaeA=="
 
