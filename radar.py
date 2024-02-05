@@ -16,9 +16,16 @@ import sys
 import time
 import platform
 import requests
+import datetime
 
 # Get operating system name
 operating_system = sys.platform
+
+# Get the current date and time
+current_datetime = datetime.datetime.now()
+
+# Extract the date and time components
+current_date = current_datetime.date()
 
 # Define ANSI escape codes for colors
 red_color_profile = "\033[31m"       # Red text
@@ -84,9 +91,36 @@ def farewell():
     time.sleep(3)
     if operating_system == 'win32':
         os.system('cls')
-    if operating_system == 'linux':
+    if operating_system == 'linux' or operating_system == 'darwin':
         os.system('clear')
     exit(0)
+
+
+def authentication():
+    # Encode your API Key and Secret
+    base64 = "NkIzVmFHSlF2RWg5em1sbmhaNXRBYVNGcGFzVnlEa0c6MEdXejUwQ3ZDYXdPbmNaeA=="
+
+    # Set headers
+    headers = {
+        'Authorization': f'Basic {base64}',
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+
+    data = {
+        'grant_type': 'client_credentials'
+    }
+
+    # Make POST request
+    token_url = 'https://api.precisely.com/oauth/token'
+    response = requests.post(token_url, headers=headers, data=data)
+
+    if response.status_code == 200:
+        token_data = response.json()
+        access_token = token_data.get('access_token')
+    else:
+        print(f"Error: {response.status_code}")
+
+    return access_token
 
 
 def validate_input(usr_input):
@@ -98,7 +132,7 @@ def validate_input(usr_input):
     if usr_input.lower() == 'quit':
         if operating_system == 'win32':
             os.system('cls')
-        if operating_system == 'linux':
+        if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
         farewell()
         time.sleep(3)
@@ -136,6 +170,10 @@ def get_location_details():
     local news.
     """
 
+    global city_name
+    global latitude
+    global longitude
+
     google_api = "AIzaSyBLkIviPn0C-P7gK2civVkI4hoUXvfv3ck"
     url = f"https://maps.googleapis.com/maps/api/geocode/json?address={user_input}&key={google_api}"
     response = requests.get(url)
@@ -152,6 +190,7 @@ def get_location_details():
                 for component in result['address_components']:
                     if 'locality' in component['types']:
                         city = component['long_name']
+                        city_name = component['long_name']
                     if 'geometry' in result and 'location' in result['geometry']:
                         latitude = result['geometry']['location']['lat']
                         longitude = result['geometry']['location']['lng']
@@ -159,18 +198,14 @@ def get_location_details():
                     if city and latitude is not None and longitude is not None:
                         break
 
-    # print(f"{city}")
-    # print(f"{latitude}")
-    # print(f"{longitude}")
 
-
-def get_weather():
+def get_weather(city):
     """
     Function get_weather that requests weather info by calling
     WeatherAPI to retrieve weather information for that zip code.
     """
 
-    print("\033[31mRetrieving Weather information. Please wait... \033[0m")
+    print(f"\033[31mRetrieving Weather information for {city}. Please wait... \033[0m")
     time.sleep(0.5)
     api_key = 'dd86ae75f9b94cafb28195718241501'
     url = f'http://api.weatherapi.com/v1/current.json?key={api_key}&q={user_input}&aqi=no'
@@ -188,11 +223,11 @@ def get_weather():
     input("\n\033[32mPress Enter to Continue...\033[0m")
     if operating_system == 'win32':
         os.system('cls')
-    if operating_system == 'linux':
+    if operating_system == 'linux' or operating_system == 'darwin':
         os.system('clear')
 
 
-def get_local_news():
+def get_local_news(city):
     """
     Function get_local_news sends a request to NewsAPI.org to
     retrieve local news of that zip code. NewsAPI uses keywords
@@ -202,7 +237,8 @@ def get_local_news():
 
     print("\033[31mRetrieving Local News. Please wait... \033[0m")
     time.sleep(0.5)
-    url = f"https://newsapi.org/v2/everything?q={city}&from=2024-01-03&sortBy=publishedAt&apiKey=342d3256cc1c4b2cb71cfb4a00ba9a92"
+    url = (f"https://newsapi.org/v2/everything?q={city_name}&from=2024-01-05&to={current_date}&sortBy="
+           f"publishedAt&apiKey=342d3256cc1c4b2cb71cfb4a00ba9a92&language=en")
 
     response = requests.get(url)
 
@@ -216,24 +252,23 @@ def get_local_news():
     input("\n\033[32mPress Enter to continue...\033[0m")
     if operating_system == 'win32':
         os.system('cls')
-    if operating_system == 'linux':
+    if operating_system == 'linux' or operating_system == 'darwin':
         os.system('clear')
 
 
-def get_time():
+def get_time(city, latitude, longitude):
     """
     Function get_time retrieves the current time and time zone
     of the location that the user inputted. No API key was required,
     and it is free to use.
     """
 
-    print("\033[31mRetrieving time information. Please wait... \033[0m")
+    print(f"\033[31mRetrieving time information for {city}. Please wait... \033[0m")
     time.sleep(0.5)
-    url = "https://timeapi.io/api/Time/current/zone"
+    url = f"https://timeapi.io/api/Time/current/coordinate?latitude={latitude}&longitude={longitude}"
 
     parameters = {
         "format": "json",
-        "timeZone": "America/Los_Angeles"
     }
 
     response = requests.get(url, params=parameters)
@@ -241,23 +276,45 @@ def get_time():
     if response.status_code == 200:
         clear_selected_line()
         data = response.json()
-        print("\033[36mTime Zone:\033[0m", data)
+        timezone = data.get("timeZone")
+        current_time = data.get("time")
+        print(f"\033[36mTime Info for {city}:\033[0m", "\nTime Zone: ", timezone, "\nTime: ", current_time)
     else:
         print(f"Error: {response.status_code}")
 
     input("\n\033[32mPress Enter to continue...\033[0m")
     if operating_system == 'win32':
         os.system('cls')
-    if operating_system == 'linux':
+    if operating_system == 'linux' or operating_system == 'darwin':
         os.system('clear')
 
 
-def get_tax_rates():
-    print("\033[31mRetrieving tax rates. Please wait... \033[0m")
-    time.sleep(0.5)
-    url = "https://api.precisely.com/localtax/v1/taxrate/General/bylocation?latitude=32.7749487&longitude=-117.0146736"
+def get_tax_rates(lat, long):
+    """
+        Function get_tax_rate retrieves the tax rate of the zip code
+        by using the longitudinal and latitudinal coordinates. This
+        API call requires authorization using tokens. Documentation
+        on how to generate token is found on PreciselyAPI website:
+        https://docs.precisely.services/docs/sftw/precisely-apis/main/en-us/webhelp/apis/Getting%20Started/
+        generating_an_oauth_token.html
+    """
+    print("\033[31mAuthentication connection... Please wait\033[0m")
+    time.sleep(1.0)
+    token = authentication()
+    clear_selected_line()
 
-    response = requests.get(url)
+    # Print status message
+    print("\033[31mRetrieving tax rates...\033[0m")
+    time.sleep(0.5)
+    url = f"https://api.precisely.com/localtax/v1/taxrate/General/bylocation?latitude={lat}&longitude={long}"
+
+    # Set the Authorization header with the access token
+    headers = {
+        'Authorization': f'Bearer {token}'
+    }
+
+    # Get response
+    response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
         clear_selected_line()
@@ -265,7 +322,7 @@ def get_tax_rates():
         print(data)
 
         # Access the "TotalTaxRate" from the "salesTax" object
-        total_tax_rate = data.get("salesTax", {}).get("TotalTaxRate", None)
+        total_tax_rate = data.get("salesTax", {}).get("totalTaxRate", None)
 
         if total_tax_rate is not None:
             print("\033[36mTotal Tax Rate:\033[0m", total_tax_rate)
@@ -277,7 +334,7 @@ def get_tax_rates():
     input("\n\033[32mPress Enter to continue...\033[0m")
     if operating_system == 'win32':
         os.system('cls')
-    if operating_system == 'linux':
+    if operating_system == 'linux' or operating_system == 'darwin':
         os.system('clear')
 
 ########################################################################################################################
@@ -314,7 +371,7 @@ while True:
     if has_displayed_intro:
         if operating_system == 'win32':
             os.system('cls')
-        if operating_system == 'linux':
+        if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
         display_intro()
     print("\n\t1. Weather\n")
@@ -332,7 +389,7 @@ while True:
         if user_choice == 'quit':
             if operating_system == 'win32':
                 os.system('cls')
-            if operating_system == 'linux':
+            if operating_system == 'linux' or operating_system == 'darwin':
                 os.system('clear')
             farewell()
         elif user_choice < '1' or user_choice > '7':
@@ -342,7 +399,7 @@ while True:
         else:
             if operating_system == 'win32':
                 os.system('cls')
-            if operating_system == 'linux':
+            if operating_system == 'linux' or operating_system == 'darwin':
                 os.system('clear')
             display_intro()
             break
@@ -350,31 +407,26 @@ while True:
     if user_choice.lower() == 'quit':
         if operating_system == 'win32':
             os.system('cls')
-        if operating_system == 'linux':
+        if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
         farewell()
 
     elif user_choice == '1':
-        get_weather()
+        get_weather(city_name)
 
     elif user_choice == '2':
-        get_local_news()
+        get_local_news(city_name)
 
     elif user_choice == '3':
-        get_time()
+        get_time(city_name, latitude, longitude)
 
     elif user_choice == '4':
-        # get_tax_rates()
-        input("Tax Rates Info Coming soon... Press Enter to continue")
-        if operating_system == 'win32':
-            os.system('cls')
-        if operating_system == 'linux':
-            os.system('clear')
+        get_tax_rates(latitude, longitude)
 
     elif user_choice == '5':
         if operating_system == 'win32':
             os.system('cls')
-        if operating_system == 'linux':
+        if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
         display_intro()
         while True:
@@ -383,18 +435,20 @@ while True:
             if not result:
                 continue
             else:
+                # Get more details regarding zip code (city name, latitude, and longitude)
+                get_location_details()
                 break
 
     elif user_choice == '6':
         input("Password Generator Coming soon... Press Enter to continue")
         if operating_system == 'win32':
             os.system('cls')
-        if operating_system == 'linux':
+        if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
 
     elif user_choice == '7':
         if operating_system == 'win32':
             os.system('cls')
-        if operating_system == 'linux':
+        if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
         farewell()
