@@ -215,7 +215,16 @@ def get_weather(city):
     if response.status_code == 200:
         clear_selected_line()
         data = response.json()
-        print("\033[36mWeather:\033[0m", data)
+        print("\033[36mWeather information for", city + ":\033[0m")
+        print("Name:", data["location"]["name"])
+        print("Region:", data["location"]["region"])
+        print("Temperature (F):", data["current"]["temp_f"])
+        print("Condition:", data["current"]["condition"]["text"])
+        print("Wind Speed (mph):", data["current"]["wind_mph"])
+        print("Wind Direction:", data["current"]["wind_dir"])
+        print("Humidity:", data["current"]["humidity"], "%")
+        print("Feels Like (F):", data["current"]["feelslike_f"])
+        print("UV Index:", data["current"]["uv"])
     else:
         clear_selected_line()
         print("Error retrieving weather")
@@ -235,21 +244,71 @@ def get_local_news(city):
     Google Geocoding API and then searches news for that city.
     """
 
-    print("\033[31mRetrieving Local News. Please wait... \033[0m")
+    print("\033[31mRetrieving News. Please wait... \033[0m")
     time.sleep(0.5)
-    url = (f"https://newsapi.org/v2/everything?q={city_name}&from=2024-01-05&to={current_date}&sortBy="
-           f"publishedAt&apiKey=342d3256cc1c4b2cb71cfb4a00ba9a92&language=en")
+    page = 1
+    articles_per_page = 10
 
-    response = requests.get(url)
+    while True:
+        url = (f"https://newsapi.org/v2/everything?q={city_name}&from=2024-01-05&to={current_date}&sortBy="
+               f"publishedAt&apiKey=342d3256cc1c4b2cb71cfb4a00ba9a92&language=en")
 
-    if response.status_code == 200:
-        clear_selected_line()
-        data = response.json()
-        print("\033[36mLocal News:\033[0m", data)
-    else:
-        print(f"Error: {response.status_code}")
+        response = requests.get(url)
 
-    input("\n\033[32mPress Enter to continue...\033[0m")
+        if response.status_code == 200:
+            clear_selected_line()
+            data = response.json()
+            # print(data)
+            articles = data.get("articles", [])
+            total_results = data.get("totalResults", [])
+
+            if articles:
+                start_index = (page - 1) * articles_per_page
+                end_index = start_index + articles_per_page
+
+                if page == 1:
+                    print("\033[36mNews for", city + ":\033[0m")
+
+                for index, article in enumerate(articles[start_index:end_index], start=start_index + 1):
+                    source_name = article.get("source", {}).get("name")
+                    author = article.get("author")
+                    title = article.get("title")
+                    url = article.get("url")
+                    published_at = article.get("publishedAt")
+
+                    # Check if any of the relevant fields contains [Removed]
+                    if "[Removed]" not in source_name and title != "[Removed]" and url != "https://removed.com":
+                        published_at = datetime.datetime.fromisoformat(published_at.replace("Z", "+00:00"))
+                        formatted_published_at = published_at.strftime("%Y-%m-%d")
+
+                        print(f"Article {index}:")
+                        print("Published At:", formatted_published_at)
+                        print("Source:", source_name)
+                        print("Author:", author)
+                        print("Title:", title)
+                        print("URL:", url)
+                        print("\n")
+                print("\t\t\t\t\t\t\t\033[31mPage:", page, "\033[0m")
+                print("\033[33m+---------------------------------------------------------------------------------------"
+                      "-------------------------------+\033[0m")
+                page += 1
+
+                # Check if there are more pages or exit
+                if end_index >= total_results or end_index >= 100:
+                    print("\nNo more articles to display.")
+                    input("\033[32mPress Enter to continue...\033[0m")
+                    break
+
+                else:
+                    # Ask the user to press Enter to continue or exit
+                    usr_keystroke = input("\n\033[32mPress Enter to continue or type 'exit' to exit...\033[0m")
+                    if usr_keystroke.lower() == 'exit':
+                        break
+
+        else:
+            print(f"Error: {response.status_code}")
+            break
+
     if operating_system == 'win32':
         os.system('cls')
     if operating_system == 'linux' or operating_system == 'darwin':
@@ -375,7 +434,7 @@ while True:
             os.system('clear')
         display_intro()
     print("\n\t1. Weather\n")
-    print("\t2. Local News\n")
+    print(f"\t2. News for {city_name}\n")
     print("\t3. Time Zone\n")
     print("\t4. Tax Rates\n")
     print("\t5. Enter New Zip Code\n")
