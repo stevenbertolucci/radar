@@ -17,6 +17,8 @@ import time
 import platform
 import requests
 import datetime
+import urllib.request
+from bs4 import BeautifulSoup
 
 # Get operating system name
 operating_system = sys.platform
@@ -242,6 +244,48 @@ def get_weather(city):
         os.system('clear')
 
 
+def format_paragraph_with_max_words_per_line(paragraph, max_words_per_line=12):
+    """
+    Function to format a paragraph with a maximum number of 12 words per line.
+    """
+    words = paragraph.split()
+    lines = []
+    current_line = []
+
+    for word in words:
+        current_line.append(word)
+        if len(current_line) >= max_words_per_line:
+            lines.append(" ".join(current_line))
+            current_line = []
+
+    if current_line:
+        lines.append(" ".join(current_line))
+
+    return "\n".join(lines)
+
+
+def get_article_content(url):
+    """
+    Function to fetch and parse the content of an article given its URL.
+    """
+    try:
+        with urllib.request.urlopen(url) as response:
+            html = response.read()
+            soup = BeautifulSoup(html, 'html.parser')
+            paragraphs = [p.get_text() for p in soup.find_all('p') if p.get_text()]
+
+            # Filter out paragraphs with 3 words or less
+            filtered_paragraphs = [p for p in paragraphs if len(p.split()) > 3]
+
+            short_lines = [format_paragraph_with_max_words_per_line(p, max_words_per_line=12) for p in
+                           filtered_paragraphs]
+            formatted_text = "\n\n".join(short_lines)
+            return formatted_text
+    except Exception as e:
+        print(f"Error fetching article content: {str(e)}")
+        return ""
+
+
 def get_local_news(city):
     """
     Function get_local_news sends a request to NewsAPI.org to
@@ -273,7 +317,7 @@ def get_local_news(city):
                 end_index = start_index + articles_per_page
 
                 if page == 1:
-                    print("\033[36mNews for", city + ":\033[0m")
+                    print("\033[36mNews for", city + ":\033[0m\n")
 
                 for index, article in enumerate(articles[start_index:end_index], start=start_index + 1):
                     source_name = article.get("source", {}).get("name")
@@ -287,13 +331,19 @@ def get_local_news(city):
                         published_at = datetime.datetime.fromisoformat(published_at.replace("Z", "+00:00"))
                         formatted_published_at = published_at.strftime("%Y-%m-%d")
 
-                        print(f"Article {index}:")
+                        print(f"\033[33mArticle {index}:\033[0m")
                         print("Published At:", formatted_published_at)
                         print("Source:", source_name)
                         print("Author:", author)
-                        print("Title:", title)
-                        print("URL:", url)
-                        print("\n")
+                        print("Title:", title, "\n")
+
+                        # Fetch and display the article content
+                        article_content = get_article_content(url)
+                        #print("Content:")
+                        print(article_content)
+
+                        print("\033[34mURL:", url)
+                        print("\n\033[0m")
                 print("\t\t\t\t\t\t\t\033[31mPage:", page, "\033[0m")
                 print("\033[33m+---------------------------------------------------------------------------------------"
                       "-------------------------------+\033[0m")

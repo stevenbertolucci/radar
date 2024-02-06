@@ -51,7 +51,4 @@ weatherDict = {
 
 }
 
-#if code == 1000:
-print(f"""
-        ☀️
-        """)
+
