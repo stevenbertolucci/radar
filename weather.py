@@ -50,5 +50,3 @@ weatherDict = {
     1282: "Moderate or heavy snow with thunder"
 
 }
-
-

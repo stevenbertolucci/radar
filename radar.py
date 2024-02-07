@@ -18,6 +18,9 @@ import platform
 import requests
 import datetime
 import urllib.request
+from temperature import temperature_colors
+from conditions import condition
+from uv_index import uv_index
 from bs4 import BeautifulSoup
 
 # Get operating system name
@@ -226,13 +229,13 @@ def get_weather(city):
         print("\033[36mWeather information for", city + ":\033[0m")
         print("Name:", data["location"]["name"])
         print("Region:", data["location"]["region"])
-        print("Temperature (F):", data["current"]["temp_f"])
-        print("Condition:", data["current"]["condition"]["text"])
+        print(f"Temperature (F): {temperature_colors(data['current']['temp_f'])}{data['current']['temp_f']}\033[0m")
+        print("Condition:", condition(data["current"]["condition"]["text"]), data["current"]["condition"]["text"], "\033[0m")
         print("Wind Speed (mph):", data["current"]["wind_mph"])
         print("Wind Direction:", data["current"]["wind_dir"])
         print("Humidity:", data["current"]["humidity"], "%")
         print("Feels Like (F):", data["current"]["feelslike_f"])
-        print("UV Index:", data["current"]["uv"])
+        print("UV Index:", uv_index(data["current"]["uv"]), data["current"]["uv"], "\033[0m")
     else:
         clear_selected_line()
         print("Error retrieving weather")
@@ -308,7 +311,7 @@ def get_local_news(city):
         if response.status_code == 200:
             clear_selected_line()
             data = response.json()
-            # print(data)
+            print(data)
             articles = data.get("articles", [])
             total_results = data.get("totalResults", [])
 
@@ -338,9 +341,9 @@ def get_local_news(city):
                         print("Title:", title, "\n")
 
                         # Fetch and display the article content
-                        article_content = get_article_content(url)
-                        #print("Content:")
-                        print(article_content)
+                        # article_content = get_article_content(url)
+                        # print("Content:")
+                        # print(article_content)
 
                         print("\033[34mURL:", url)
                         print("\n\033[0m")
