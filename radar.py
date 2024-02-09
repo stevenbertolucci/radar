@@ -28,6 +28,7 @@ operating_system = sys.platform
 
 # Get the current date and time
 current_datetime = datetime.datetime.now()
+a_week_before_current_date = current_datetime - datetime.timedelta(days=7)
 
 # Extract the date and time components
 current_date = current_datetime.date()
@@ -303,7 +304,7 @@ def get_local_news(city):
     articles_per_page = 10
 
     while True:
-        url = (f"https://newsapi.org/v2/everything?q={city_name}&from=2024-01-05&to={current_date}&sortBy="
+        url = (f"https://newsapi.org/v2/everything?q={city_name}&from={a_week_before_current_date}&to={current_date}&sortBy="
                f"publishedAt&apiKey=342d3256cc1c4b2cb71cfb4a00ba9a92&language=en")
 
         response = requests.get(url)
@@ -311,7 +312,7 @@ def get_local_news(city):
         if response.status_code == 200:
             clear_selected_line()
             data = response.json()
-            print(data)
+            #print(data)
             articles = data.get("articles", [])
             total_results = data.get("totalResults", [])
 
@@ -341,11 +342,11 @@ def get_local_news(city):
                         print("Title:", title, "\n")
 
                         # Fetch and display the article content
-                        # article_content = get_article_content(url)
-                        # print("Content:")
-                        # print(article_content)
+                        article_content = get_article_content(url)
+                        print("Content:")
+                        print(article_content)
 
-                        print("\033[34mURL:", url)
+                        print("\033[36mURL:", url)
                         print("\n\033[0m")
                 print("\t\t\t\t\t\t\t\033[31mPage:", page, "\033[0m")
                 print("\033[33m+---------------------------------------------------------------------------------------"
