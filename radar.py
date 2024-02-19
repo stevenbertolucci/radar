@@ -12,6 +12,7 @@
 #
 #  -------------------------------------------------------------------
 import os
+import random
 import sys
 import time
 import platform
@@ -438,15 +439,29 @@ def get_tax_rates(lat, long):
     if response.status_code == 200:
         clear_selected_line()
         data = response.json()
-        print(data)
+        #print(data)
 
-        # Access the "TotalTaxRate" from the "salesTax" object
-        total_tax_rate = data.get("salesTax", {}).get("totalTaxRate", None)
+        # Extract and display relevant information
+        city_info = data.get("jurisdiction", {}).get("place", {})
+        city_info = city_info.get("name", "N/A")
+        county_info = data.get("jurisdiction", {}).get("county", {})
+        county_info = county_info.get("name", "N/A")
+        state_info = data.get("jurisdiction", {}).get("state", {})
+        state_info = state_info.get("name", "N/A")
+        sales_tax = data.get("salesTax", {})
+        total_tax_rate = sales_tax.get("totalTaxRate", "N/A")
+        state_tax_rate = sales_tax.get("stateTaxRate", "N/A")
+        county_tax_rate = sales_tax.get("countyTaxRate", "N/A")
+        municipal_tax_rate = sales_tax.get("municipalTaxRate", "N/A")
 
-        if total_tax_rate is not None:
-            print("\033[36mTotal Tax Rate:\033[0m", total_tax_rate)
-        else:
-            print("Total Tax Rate information not found.")
+        print("\033[36mCity:\033[0m", city_info)
+        print("\033[36mCounty:\033[0m", county_info)
+        print("\033[36mState:\033[0m", state_info)
+        print("\033[36mTotal Tax Rate:\033[0m", total_tax_rate)
+        print("\033[36mState Tax Rate:\033[0m", state_tax_rate)
+        print("\033[36mCounty Tax Rate:\033[0m", county_tax_rate)
+        print("\033[36mMunicipal Tax Rate:\033[0m", municipal_tax_rate)
+
     else:
         print(f"Error: {response.status_code}")
 
@@ -455,6 +470,136 @@ def get_tax_rates(lat, long):
         os.system('cls')
     if operating_system == 'linux' or operating_system == 'darwin':
         os.system('clear')
+
+
+def generate_password():
+    """
+        Function generate_password is used to generate password
+        with length of 8 to 32 characters. Users will be given
+        an option to add special characters, uppercase letters,
+        and numbers.
+    """
+
+    # Arrays that will contain special data
+    lower_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+                   'u', 'v', 'w', 'x', 'y', 'z']
+
+    special_chars = ['/', '*', '.', '$', '~', '`', '!', '@', '#', '%', '^', '&', '(', ')', '_', '-', '+', '=',
+                     '{', '[', '}', ']', '|', '\\', ':', ';', '"', "'", '<', '>', '?', '/']
+
+    upper_chars = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+                   'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z']
+
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+    # Start of Prompt
+    passwd_length = int(input("How long would you like the password to be? (Minimum: 8 characters. Maximum: "
+                        "32 characters): "))
+
+    while True:
+        if passwd_length < 8 or passwd_length > 32:
+            passwd_length = int(input("Please enter a valid password length: "))
+        else:
+            break
+
+    special_char_input = input("Would you like to include special characters? (Y/N): ")
+    if special_char_input.lower() != 'y' and special_char_input.lower() != 'n':
+        while True:
+            special_char_input = input("Please enter 'Y' for yes and 'N' for no: ")
+            if special_char_input.lower() == 'y' and special_char_input.lower() == 'n':
+                break
+
+    if special_char_input.lower() == 'y':
+        special_char_input = True
+
+    elif special_char_input.lower() == 'n':
+        special_char_input = False
+
+    uppercase_input = input("Would you like to include uppercase letters? (Y/N): ")
+    if uppercase_input.lower() != 'y' and uppercase_input.lower() != 'n':
+        while True:
+            uppercase_input = input("Please enter 'Y' for yes and 'N' for no: ")
+            if uppercase_input.lower() == 'y' and uppercase_input.lower() == 'n':
+                break
+
+    if uppercase_input.lower() == 'y':
+        uppercase_input = True
+
+    elif uppercase_input.lower() == 'n':
+        uppercase_input = False
+
+    numbers_input = input("Would you like to include numbers? (Y/N): ")
+    if numbers_input.lower() != 'y' and numbers_input.lower() != 'n':
+        while True:
+            numbers_input = input("Please enter 'Y' for yes and 'N' for no: ")
+            if numbers_input.lower() == 'y' and numbers_input.lower() == 'n':
+                break
+
+    if numbers_input.lower() == 'y':
+        numbers_input = True
+
+    elif numbers_input.lower() == 'n':
+        numbers_input = False
+
+    # Let user know that I am generating password
+    print("Generating password...")
+    time.sleep(1)
+
+    # If users do not want special characters, uppercase letters, and numbers,
+    # generate a password that contains only lowercase numbers.
+    if not special_char_input and not uppercase_input and not numbers_input:
+        password = ''.join(random.choice(lower_chars) for _ in range(passwd_length))
+
+    # If user wants upper case letters, generate a password with both lowercase
+    # and uppercase letters
+    elif not special_char_input and not numbers_input:
+        characters = lower_chars + upper_chars
+        password = ''.join(random.choice(characters) for _ in range(passwd_length))
+
+    # If user wants numbers, generate a password with lowercase letters and
+    # numbers.
+    elif not special_char_input and not uppercase_input:
+        characters = lower_chars + numbers
+        password = ''.join(random.choice(characters) for _ in range(passwd_length))
+
+    # If user wants special characters, generate a password with lowercase and
+    # special characters.
+    elif not numbers_input and not uppercase_input:
+        characters = lower_chars + special_chars
+        password = ''.join(random.choice(characters) for _ in range(passwd_length))
+
+    # If user wants no special characters, generate a password with lowercase and
+    # uppercase letters and numbers.
+    elif not special_char_input:
+        characters = lower_chars + upper_chars + numbers
+        password = ''.join(random.choice(characters) for _ in range(passwd_length))
+
+    # If user wants special characters and numbers, generate a password with lowercase letters,
+    # special characters and numbers.
+    elif not uppercase_input:
+        characters = lower_chars + special_chars + numbers
+        password = ''.join(random.choice(characters) for _ in range(passwd_length))
+
+    # If user wants special characters and numbers, generate a password with lowercase letters,
+    # special characters and numbers.
+    elif not numbers_input:
+        characters = lower_chars + special_chars + upper_chars
+        password = ''.join(random.choice(characters) for _ in range(passwd_length))
+
+    # Else generate a password with lowercase and uppercase letters, special
+    # characters and numbers
+    else:
+        characters = lower_chars + upper_chars + special_chars + numbers
+        password = ''.join(random.choice(characters) for _ in range(passwd_length))
+
+    print("\nGenerated Password: ", password)
+
+    input("\n\033[32mPress Enter to continue...\033[0m")
+    if operating_system == 'win32':
+        os.system('cls')
+    if operating_system == 'linux' or operating_system == 'darwin':
+        os.system('clear')
+
 
 ########################################################################################################################
 #                                                                                                                      #
@@ -559,11 +704,12 @@ while True:
                 break
 
     elif user_choice == '6':
-        input("Password Generator Coming soon... Press Enter to continue")
         if operating_system == 'win32':
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
+
+        generate_password()
 
     elif user_choice == '7':
         if operating_system == 'win32':
