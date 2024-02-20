@@ -11,6 +11,7 @@
 #       feature that users can generate for personal use.
 #
 #  -------------------------------------------------------------------
+
 import os
 import random
 import sys
@@ -53,6 +54,11 @@ has_displayed_intro = False
 
 
 def display_intro():
+    """
+    Function display_intro displays a welcome message to user.
+    Output will be in yellow with a hand-waving 'hi' emoji.
+    """
+
     # Display intro banner and copyrighted statements
     print(
         f"{green_color_profile}-----------------------------------------------------------------------------------------"
@@ -142,7 +148,7 @@ def validate_input(usr_input):
     and validates to see if User entered 'quit' or a legitimate zip code.
     """
 
-    if usr_input.lower() == 'quit':
+    if usr_input.lower() == 'quit' or usr_input.lower() == 'exit':
         if operating_system == 'win32':
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
@@ -253,6 +259,7 @@ def format_paragraph_with_max_words_per_line(paragraph, max_words_per_line=12):
     """
     Function to format a paragraph with a maximum number of 12 words per line.
     """
+
     words = paragraph.split()
     lines = []
     current_line = []
@@ -273,6 +280,7 @@ def get_article_content(url):
     """
     Function to fetch and parse the content of an article given its URL.
     """
+
     try:
         with urllib.request.urlopen(url) as response:
             html = response.read()
@@ -323,6 +331,94 @@ def get_local_news(city):
 
                 if page == 1:
                     print("\033[36mNews for", city + ":\033[0m\n")
+
+                for index, article in enumerate(articles[start_index:end_index], start=start_index + 1):
+                    source_name = article.get("source", {}).get("name")
+                    author = article.get("author")
+                    title = article.get("title")
+                    url = article.get("url")
+                    published_at = article.get("publishedAt")
+
+                    # Check if any of the relevant fields contains [Removed]
+                    if "[Removed]" not in source_name and title != "[Removed]" and url != "https://removed.com":
+                        published_at = datetime.datetime.fromisoformat(published_at.replace("Z", "+00:00"))
+                        formatted_published_at = published_at.strftime("%Y-%m-%d")
+
+                        print(f"\033[33mArticle {index}:\033[0m")
+                        print("Published At:", formatted_published_at)
+                        print("Source:", source_name)
+                        print("Author:", author)
+                        print("Title:", title, "\n")
+
+                        # Fetch and display the article content
+                        article_content = get_article_content(url)
+                        print("Content:")
+                        print(article_content)
+
+                        print("\033[36mURL:", url)
+                        print("\n\033[0m")
+                print("\t\t\t\t\t\t\t\033[31mPage:", page, "\033[0m")
+                print("\033[33m+---------------------------------------------------------------------------------------"
+                      "-------------------------------+\033[0m")
+                page += 1
+
+                # Check if there are more pages or exit
+                if end_index >= total_results or end_index >= 100:
+                    print("\nNo more articles to display.")
+                    input("\033[32mPress Enter to continue...\033[0m")
+                    break
+
+                else:
+                    # Ask the user to press Enter to continue or exit
+                    usr_keystroke = input("\n\033[32mPress Enter to continue or type 'exit' to exit...\033[0m")
+                    if usr_keystroke.lower() == 'exit':
+                        break
+
+        else:
+            print(f"Error: {response.status_code}")
+            break
+
+    if operating_system == 'win32':
+        os.system('cls')
+    if operating_system == 'linux' or operating_system == 'darwin':
+        os.system('clear')
+
+
+def get_news():
+    """
+    Function get_news sends a request to NewsAPI.org to
+    retrieve news of the user inputted term. NewsAPI uses keywords
+    from search terms, so this function retrieves anything from
+    the user and then searches news for that search term.
+    """
+
+    search_result = input("What would you like to read about? ")
+    clear_selected_line()
+    print("\033[31mRetrieving News. Please wait... \033[0m")
+    time.sleep(0.5)
+    page = 1
+    articles_per_page = 10
+
+    while True:
+        url = (
+            f"https://newsapi.org/v2/everything?q={search_result}&from={a_week_before_current_date}&to={current_date}"
+            f"&sortBy=publishedAt&apiKey=342d3256cc1c4b2cb71cfb4a00ba9a92&language=en")
+
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            clear_selected_line()
+            data = response.json()
+            # print(data)
+            articles = data.get("articles", [])
+            total_results = data.get("totalResults", [])
+
+            if articles:
+                start_index = (page - 1) * articles_per_page
+                end_index = start_index + articles_per_page
+
+                if page == 1:
+                    print("\033[36mNews about", search_result + ":\033[0m\n")
 
                 for index, article in enumerate(articles[start_index:end_index], start=start_index + 1):
                     source_name = article.get("source", {}).get("name")
@@ -613,8 +709,15 @@ def generate_password():
 display_intro()
 
 # Display prompt to user and wait for them to hit 'Enter'
-input("\n\n\n\n\t\t\t             \U0001F44B Welcome to Radar! Press 'enter' to continue...")
+input("\n\n\n\n\t\t\t            \U0001F44B Welcome to Radar! Press 'enter' to continue...")
 clear_selected_line()
+
+if operating_system == 'win32':
+    os.system('cls')
+if operating_system == 'linux' or operating_system == 'darwin':
+    os.system('clear')
+
+display_intro()
 
 while True:
 
@@ -641,23 +744,24 @@ while True:
         display_intro()
     print("\n\t1. Weather\n")
     print(f"\t2. News for {city_name}\n")
-    print("\t3. Time Zone\n")
-    print("\t4. Tax Rates\n")
-    print("\t5. Enter New Zip Code\n")
-    print("\t6. Generate Password\n")
-    print("\t7. Exit\n")
+    print("\t3. Search the News\n")
+    print("\t4. Time Zone\n")
+    print("\t5. Tax Rates\n")
+    print("\t6. Enter New Zip Code\n")
+    print("\t7. Generate Password\n")
+    print("\t8. Exit\n")
 
     while True:
 
         user_choice = input(f"{yellow_color_profile}Pick an option: {reset_color_profile}")
 
-        if user_choice == 'quit':
+        if user_choice.lower() == 'quit' or user_choice.lower() == 'exit':
             if operating_system == 'win32':
                 os.system('cls')
             if operating_system == 'linux' or operating_system == 'darwin':
                 os.system('clear')
             farewell()
-        elif user_choice < '1' or user_choice > '7':
+        elif user_choice < '1' or user_choice > '8':
             clear_selected_line()
             print("\033[31mPlease pick a valid option.\033[0m")
             continue
@@ -669,7 +773,7 @@ while True:
             display_intro()
             break
 
-    if user_choice.lower() == 'quit':
+    if user_choice.lower() == 'quit' or user_choice.lower() == 'exit':
         if operating_system == 'win32':
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
@@ -683,12 +787,15 @@ while True:
         get_local_news(city_name)
 
     elif user_choice == '3':
-        get_time(city_name, latitude, longitude)
+        get_news()
 
     elif user_choice == '4':
-        get_tax_rates(latitude, longitude)
+        get_time(city_name, latitude, longitude)
 
     elif user_choice == '5':
+        get_tax_rates(latitude, longitude)
+
+    elif user_choice == '6':
         if operating_system == 'win32':
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
@@ -704,7 +811,7 @@ while True:
                 get_location_details()
                 break
 
-    elif user_choice == '6':
+    elif user_choice == '7':
         if operating_system == 'win32':
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
@@ -712,7 +819,7 @@ while True:
         display_intro()
         generate_password()
 
-    elif user_choice == '7':
+    elif user_choice == '8':
         if operating_system == 'win32':
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
