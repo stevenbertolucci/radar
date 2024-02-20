@@ -542,8 +542,9 @@ def generate_password():
         numbers_input = False
 
     # Let user know that I am generating password
-    print("Generating password...")
-    time.sleep(1)
+    print("\033[31mGenerating password...\033[0m")
+    time.sleep(1.5)
+    clear_selected_line()
 
     # If users do not want special characters, uppercase letters, and numbers,
     # generate a password that contains only lowercase numbers.
@@ -708,7 +709,7 @@ while True:
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
-
+        display_intro()
         generate_password()
 
     elif user_choice == '7':
