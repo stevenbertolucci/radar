@@ -23,6 +23,7 @@ import urllib.request
 from temperature import temperature_colors
 from conditions import condition
 from uv_index import uv_index
+from blackjack import play_blackjack
 from bs4 import BeautifulSoup
 
 # Get operating system name
@@ -749,7 +750,8 @@ while True:
     print("\t5. Tax Rates\n")
     print("\t6. Enter New Zip Code\n")
     print("\t7. Generate Password\n")
-    print("\t8. Exit\n")
+    print("\t8. Blackjack!\n")
+    print("\t9. Exit\n")
 
     while True:
 
@@ -761,7 +763,7 @@ while True:
             if operating_system == 'linux' or operating_system == 'darwin':
                 os.system('clear')
             farewell()
-        elif user_choice < '1' or user_choice > '8':
+        elif user_choice < '1' or user_choice > '9':
             clear_selected_line()
             print("\033[31mPlease pick a valid option.\033[0m")
             continue
@@ -820,6 +822,13 @@ while True:
         generate_password()
 
     elif user_choice == '8':
+        if operating_system == 'win32':
+            os.system('cls')
+        if operating_system == 'linux' or operating_system == 'darwin':
+            os.system('clear')
+        play_blackjack()
+
+    elif user_choice == '9':
         if operating_system == 'win32':
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':

@@ -48,5 +48,4 @@ weatherDict = {
     1276: "Moderate or heavy rain with thunder",
     1279: "Patchy light snow with thunder",
     1282: "Moderate or heavy snow with thunder"
-
 }
