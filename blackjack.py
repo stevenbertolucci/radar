@@ -1303,7 +1303,15 @@ def play_blackjack():
                             print("\nYour hand: \n", player_hand)
                             print("Player's Total: ", player_total2)
 
-                            if dealer_total3 > 21:
+                            if dealer_total3 == 21:
+                                print("\033[31mDEALER BLACKJACK! YOU LOST!\033[0m")
+                                choice = input("\nNew game? (Y/N) ")
+                                if choice.lower() == 'y':
+                                    counter += 1
+                                    continue
+                                else:
+                                    break
+                            elif dealer_total3 > 21:
                                 print("\033[32mDEALER BUSTED! YOU WIN!\033[0m")
                                 choice = input("\nNew game? (Y/N) ")
                                 if choice.lower() == 'y':
