@@ -574,6 +574,8 @@ def play_blackjack():
             card, values = draw_card(deck_of_cards)
             player_cards.append(card)
             player_values.append(values)
+
+            # Player now has 3 cards
             player_hand = player_cards[0] + " " + player_cards[1] + " " + player_cards[2]
 
             # Count the cards
@@ -620,6 +622,8 @@ def play_blackjack():
                     card, values = draw_card(deck_of_cards)
                     player_cards.append(card)
                     player_values.append(values)
+
+                    # Player has 4 cards
                     player_hand = player_cards[0] + " " + player_cards[1] + " " + player_cards[2] + " " + player_cards[3]
 
                     # Count the cards
@@ -649,16 +653,7 @@ def play_blackjack():
                             continue
                         else:
                             break
-                else:
-                    if player_total2 > dealer_total:
-                        print("\033[32mYOU WIN!\033[0m")
-                        choice = input("\nNew game? (Y/N) ")
-                        if choice.lower() == 'y':
-                            counter += 1
-                            continue
-                        else:
-                            break
-                    elif player_total2 == dealer_total:
+                    elif player_total3 == dealer_total:
                         print("\033[36mDRAW!\033[0m")
                         choice = input("\nNew game? (Y/N) ")
                         if choice.lower() == 'y':
@@ -666,7 +661,8 @@ def play_blackjack():
                             continue
                         else:
                             break
-                    else:
+
+                    elif player_total3 < dealer_total:
                         print("\033[31mYOU LOSE!\033[0m")
                         choice = input("\nNew game? (Y/N) ")
                         if choice.lower() == 'y':
@@ -675,30 +671,264 @@ def play_blackjack():
                         else:
                             break
 
-                if player_total3 > dealer_total:
-                    print("\033[32mYOU WIN!\033[0m")
-                    choice = input("\nNew game? (Y/N) ")
-                    if choice.lower() == 'y':
-                        counter += 1
-                        continue
-                    else:
-                        break
-                elif player_total3 == dealer_total:
-                    print("\033[36mDRAW!\033[0m")
-                    choice = input("\nNew game? (Y/N) ")
-                    if choice.lower() == 'y':
-                        counter += 1
-                        continue
-                    else:
-                        break
+                    elif player_total3 > dealer_total:
+                        time.sleep(2)
+                        # Refresh screen
+                        if operating_system == 'win32':
+                            os.system('cls')
+                        if operating_system == 'linux' or operating_system == 'darwin':
+                            os.system('clear')
+
+                        display_blackjack_intro()
+                        i += 1
+                        dealer_total2 = 0
+                        card, values = draw_card(deck_of_cards)
+                        dealer_cards.append(card)
+                        dealer_values.append(values)
+
+                        # Dealer has 3 cards
+                        dealer_hand = dealer_cards[0] + " " + dealer_cards[1] + " " + dealer_cards[2]
+
+                        # Count the cards
+                        dealer_total2 += sum(dealer_values)
+
+                        # Display the cards from both players
+                        print("Dealer's hand: \n", dealer_hand)
+                        print("Dealer's Total: ", dealer_total2)
+
+                        print("\nYour hand: \n", player_hand)
+                        print("Player's Total: ", player_total3)
+
+                        time.sleep(2.0)
+                        if dealer_total2 == 21:
+                            print("\033[31mDEALER BLACKJACK! YOU LOSE!\033[0m")
+                            choice = input("\nNew game? (Y/N) ")
+                            if choice.lower() == 'y':
+                                counter += 1
+                                continue
+                            else:
+                                break
+                        elif dealer_total2 > 21:
+                            print("\033[32mDEALER BUSTED! YOU WIN!\033[0m")
+                            choice = input("\nNew game? (Y/N) ")
+                            if choice.lower() == 'y':
+                                counter += 1
+                                continue
+                            else:
+                                break
+                        elif player_total3 == dealer_total2:
+                            print("\033[36mDRAW!\033[0m")
+                            choice = input("\nNew game? (Y/N) ")
+                            if choice.lower() == 'y':
+                                counter += 1
+                                continue
+                            else:
+                                break
+                        elif player_total3 < dealer_total2:
+                            print("\033[31mYOU LOSE!\033[0m")
+                            choice = input("\nNew game? (Y/N) ")
+                            if choice.lower() == 'y':
+                                counter += 1
+                                continue
+                            else:
+                                break
+
+                        if player_total3 > dealer_total2:
+
+                            # Refresh screen
+                            if operating_system == 'win32':
+                                os.system('cls')
+                            if operating_system == 'linux' or operating_system == 'darwin':
+                                os.system('clear')
+
+                            display_blackjack_intro()
+                            i += 1
+                            dealer_total3 = 0
+                            card, values = draw_card(deck_of_cards)
+                            dealer_cards.append(card)
+                            dealer_values.append(values)
+
+                            # Dealer has 4 cards
+                            dealer_hand = dealer_cards[0] + " " + dealer_cards[1] + " " + dealer_cards[2] + " " + \
+                                          dealer_cards[3]
+
+                            # Count the cards
+                            dealer_total3 += sum(dealer_values)
+
+                            # Display the cards from both players
+                            print("Dealer's hand: \n", dealer_hand)
+                            print("Dealer's Total: ", dealer_total3)
+
+                            print("\nYour hand: \n", player_hand)
+                            print("Player's Total: ", player_total3)
+
+                            if dealer_total3 > 21:
+                                print("\033[32mDEALER BUSTED! YOU WIN!\033[0m")
+                                choice = input("\nNew game? (Y/N) ")
+                                if choice.lower() == 'y':
+                                    counter += 1
+                                    continue
+                                else:
+                                    break
+                            elif player_total3 > dealer_total3:
+                                print("\033[32mYOU WIN!\033[0m")
+                                choice = input("\nNew game? (Y/N) ")
+                                if choice.lower() == 'y':
+                                    counter += 1
+                                    continue
+                                else:
+                                    break
+                            elif player_total3 == dealer_total3:
+                                print("\033[36mDRAW!\033[0m")
+                                choice = input("\nNew game? (Y/N) ")
+                                if choice.lower() == 'y':
+                                    counter += 1
+                                    continue
+                                else:
+                                    break
+                            elif player_total3 < dealer_total3 <= 21:
+                                print("\033[31mYOU LOST!\033[0m")
+                                choice = input("\nNew game? (Y/N) ")
+                                if choice.lower() == 'y':
+                                    counter += 1
+                                    continue
+                                else:
+                                    break
+
                 else:
-                    print("\033[31mYOU LOSE!\033[0m")
-                    choice = input("\nNew game? (Y/N) ")
-                    if choice.lower() == 'y':
-                        counter += 1
-                        continue
+                    if player_total2 > dealer_total:
+                        time.sleep(1)
+                        # Refresh screen
+                        if operating_system == 'win32':
+                            os.system('cls')
+                        if operating_system == 'linux' or operating_system == 'darwin':
+                            os.system('clear')
+
+                        display_blackjack_intro()
+                        i += 1
+                        dealer_total2 = 0
+                        card, values = draw_card(deck_of_cards)
+                        dealer_cards.append(card)
+                        dealer_values.append(values)
+
+                        # Dealer has 3 cards
+                        dealer_hand = dealer_cards[0] + " " + dealer_cards[1] + " " + dealer_cards[2]
+
+                        # Count the cards
+                        dealer_total2 += sum(dealer_values)
+
+                        # Display the cards from both players
+                        print("Dealer's hand: \n", dealer_hand)
+                        print("Dealer's Total: ", dealer_total2)
+
+                        print("\nYour hand: \n", player_hand)
+                        print("Player's Total: ", player_total2)
+
+                        time.sleep(2.0)
+
+                        if dealer_total2 == 21:
+                            print("\033[31mDEALER BLACKJACK! YOU LOST!\033[0m")
+                            choice = input("\nNew game? (Y/N) ")
+                            if choice.lower() == 'y':
+                                counter += 1
+                                continue
+                            else:
+                                break
+                        if dealer_total2 > 21:
+                            print("\033[32mDEALER BUSTED! YOU WIN!\033[0m")
+                            choice = input("\nNew game? (Y/N) ")
+                            if choice.lower() == 'y':
+                                counter += 1
+                                continue
+                            else:
+                                break
+                        elif player_total2 == dealer_total2:
+                            print("\033[36mDRAW!\033[0m")
+                            choice = input("\nNew game? (Y/N) ")
+                            if choice.lower() == 'y':
+                                counter += 1
+                                continue
+                            else:
+                                break
+
+                        if player_total2 > dealer_total2:
+
+                            # Refresh screen
+                            if operating_system == 'win32':
+                                os.system('cls')
+                            if operating_system == 'linux' or operating_system == 'darwin':
+                                os.system('clear')
+
+                            display_blackjack_intro()
+                            i += 1
+                            dealer_total3 = 0
+                            card, values = draw_card(deck_of_cards)
+                            dealer_cards.append(card)
+                            dealer_values.append(values)
+
+                            # Dealer has 4 cards
+                            dealer_hand = dealer_cards[0] + " " + dealer_cards[1] + " " + dealer_cards[2] + " " + \
+                                          dealer_cards[3]
+
+                            # Count the cards
+                            dealer_total3 += sum(dealer_values)
+
+                            # Display the cards from both players
+                            print("Dealer's hand: \n", dealer_hand)
+                            print("Dealer's Total: ", dealer_total3)
+
+                            print("\nYour hand: \n", player_hand)
+                            print("Player's Total: ", player_total2)
+
+                            if dealer_total3 > 21:
+                                print("\033[32mDEALER BUSTED! YOU WIN!\033[0m")
+                                choice = input("\nNew game? (Y/N) ")
+                                if choice.lower() == 'y':
+                                    counter += 1
+                                    continue
+                                else:
+                                    break
+                            elif player_total2 > dealer_total3:
+                                print("\033[32mYOU WIN!\033[0m")
+                                choice = input("\nNew game? (Y/N) ")
+                                if choice.lower() == 'y':
+                                    counter += 1
+                                    continue
+                                else:
+                                    break
+                            elif player_total2 == dealer_total3:
+                                print("\033[36mDRAW!\033[0m")
+                                choice = input("\nNew game? (Y/N) ")
+                                if choice.lower() == 'y':
+                                    counter += 1
+                                    continue
+                                else:
+                                    break
+                            elif player_total2 < dealer_total3 <= 21:
+                                print("\033[31mYOU LOST!\033[0m")
+                                choice = input("\nNew game? (Y/N) ")
+                                if choice.lower() == 'y':
+                                    counter += 1
+                                    continue
+                                else:
+                                    break
+                    elif player_total2 == dealer_total:
+                        print("\033[36mDRAW!\033[0m")
+                        choice = input("\nNew game? (Y/N) ")
+                        if choice.lower() == 'y':
+                            counter += 1
+                            continue
+                        else:
+                            break
+
                     else:
-                        break
+                        print("\033[31mYOU LOSE!\033[0m")
+                        choice = input("\nNew game? (Y/N) ")
+                        if choice.lower() == 'y':
+                            counter += 1
+                            continue
+                        else:
+                            break
 
         # Dealers Turn
         else:
@@ -716,6 +946,8 @@ def play_blackjack():
                 card, values = draw_card(deck_of_cards)
                 dealer_cards.append(card)
                 dealer_values.append(values)
+
+                # Dealer has 3 cards
                 dealer_hand = dealer_cards[0] + " " + dealer_cards[1] + " " + dealer_cards[2]
 
                 # Count the cards
@@ -729,6 +961,39 @@ def play_blackjack():
                 print("Player's Total: ", player_total)
 
                 time.sleep(2.0)
+                if dealer_total2 == 21:
+                    print("\033[31mDEALER BLACKJACK! YOU LOST!\033[0m")
+                    choice = input("\nNew game? (Y/N) ")
+                    if choice.lower() == 'y':
+                        counter += 1
+                        continue
+                    else:
+                        break
+                if dealer_total2 > 21:
+                    print("\033[32mDEALER BUSTED! YOU WIN!\033[0m")
+                    choice = input("\nNew game? (Y/N) ")
+                    if choice.lower() == 'y':
+                        counter += 1
+                        continue
+                    else:
+                        break
+                elif player_total == dealer_total2:
+                    print("\033[36mDRAW!\033[0m")
+                    choice = input("\nNew game? (Y/N) ")
+                    if choice.lower() == 'y':
+                        counter += 1
+                        continue
+                    else:
+                        break
+                elif player_total < dealer_total2 <= 21:
+                    print("\033[31mYOU LOST!\033[0m")
+                    choice = input("\nNew game? (Y/N) ")
+                    if choice.lower() == 'y':
+                        counter += 1
+                        continue
+                    else:
+                        break
+
 
                 if player_total > dealer_total2:
 
@@ -744,6 +1009,8 @@ def play_blackjack():
                     card, values = draw_card(deck_of_cards)
                     dealer_cards.append(card)
                     dealer_values.append(values)
+
+                    # Dealer has 4 cards
                     dealer_hand = dealer_cards[0] + " " + dealer_cards[1] + " " + dealer_cards[2] + " " + dealer_cards[3]
 
                     # Count the cards
@@ -756,7 +1023,23 @@ def play_blackjack():
                     print("\nYour hand: \n", player_hand)
                     print("Player's Total: ", player_total)
 
-                    if player_total > dealer_total3:
+                    if dealer_total3 == 21:
+                        print("\033[31mDEALER BLACKJACK! YOU LOSE!\033[0m")
+                        choice = input("\nNew game? (Y/N) ")
+                        if choice.lower() == 'y':
+                            counter += 1
+                            continue
+                        else:
+                            break
+                    elif dealer_total3 > 21:
+                        print("\033[32mDEALER BUSTED! YOU WIN!\033[0m")
+                        choice = input("\nNew game? (Y/N) ")
+                        if choice.lower() == 'y':
+                            counter += 1
+                            continue
+                        else:
+                            break
+                    elif player_total > dealer_total3:
                         print("\033[32mYOU WIN!\033[0m")
                         choice = input("\nNew game? (Y/N) ")
                         if choice.lower() == 'y':
@@ -765,7 +1048,7 @@ def play_blackjack():
                         else:
                             break
                     elif player_total == dealer_total3:
-                        print("\033[36mGAME'S TIED!\033[0m")
+                        print("\033[36mDRAW!\033[0m")
                         choice = input("\nNew game? (Y/N) ")
                         if choice.lower() == 'y':
                             counter += 1
