@@ -467,14 +467,27 @@ def draw_card(deck):
 
 
 def play_blackjack():
+    counter = 0
 
     while True:
+
+        if counter > 0:
+            # Refresh screen
+            if operating_system == 'win32':
+                os.system('cls')
+            if operating_system == 'linux' or operating_system == 'darwin':
+                os.system('clear')
+
+        # Display intro banner
+        display_blackjack_intro()
+
+        # Initialize arrays
         dealer_cards = []
         dealer_values = []
         player_cards = []
         player_values = []
-        display_blackjack_intro()
 
+        # Get cards
         deck_of_cards = cards()
 
         # Dealer Cards
@@ -521,6 +534,7 @@ def play_blackjack():
             print("\033[36mBOTH OF YOU GOT A BLACKJACK! GAME'S TIED!\033[0m")
             choice = input("\nNew game? (Y/N) ")
             if choice.lower() == 'y':
+                counter += 1
                 continue
             else:
                 break
@@ -528,6 +542,7 @@ def play_blackjack():
             print("\033[31mDealer got a BLACKJACK!\033[0m")
             choice = input("\nNew game? (Y/N) ")
             if choice.lower() == 'y':
+                counter += 1
                 continue
             else:
                 break
@@ -535,15 +550,22 @@ def play_blackjack():
             print("\033[32mYou got a BLACKJACK!\033[0m")
             choice = input("\nNew game? (Y/N) ")
             if choice.lower() == 'y':
+                counter += 1
                 continue
             else:
                 break
 
-        # Ask user if they want to hit or stay
+        # Ask user (YOU) if they want to hit or stay
         usr_input = input("Hit (1) or Stay (2)? ")
 
         if usr_input == '1':
-            os.system('cls')
+
+            # Refresh screen
+            if operating_system == 'win32':
+                os.system('cls')
+            if operating_system == 'linux' or operating_system == 'darwin':
+                os.system('clear')
+
             display_blackjack_intro()
             j += 1
             player_total2 = 0
@@ -567,6 +589,7 @@ def play_blackjack():
                 print("\033[32mBLACKJACK! YOU WIN!\033[0m")
                 choice = input("\nNew game? (Y/N) ")
                 if choice.lower() == 'y':
+                    counter += 1
                     continue
                 else:
                     break
@@ -574,6 +597,7 @@ def play_blackjack():
                 print("\033[31mBUSTED! YOU LOSE!\033[0m")
                 choice = input("\nNew game? (Y/N) ")
                 if choice.lower() == 'y':
+                    counter += 1
                     continue
                 else:
                     break
@@ -581,7 +605,13 @@ def play_blackjack():
                 # Ask user if they want to hit or stay
                 usr_input = input("Hit (1) or Stay (2)? ")
                 if usr_input == '1':
-                    os.system('cls')
+
+                    # Refresh screen
+                    if operating_system == 'win32':
+                        os.system('cls')
+                    if operating_system == 'linux' or operating_system == 'darwin':
+                        os.system('clear')
+
                     display_blackjack_intro()
                     j += 1
                     player_total3 = 0
@@ -605,6 +635,7 @@ def play_blackjack():
                         print("\033[32mBLACKJACK! YOU WIN!\033[0m")
                         choice = input("\nNew game? (Y/N) ")
                         if choice.lower() == 'y':
+                            counter += 1
                             continue
                         else:
                             break
@@ -612,6 +643,7 @@ def play_blackjack():
                         print("\033[31mBUSTED! YOU LOSE!\033[0m")
                         choice = input("\nNew game? (Y/N) ")
                         if choice.lower() == 'y':
+                            counter += 1
                             continue
                         else:
                             break
@@ -620,6 +652,7 @@ def play_blackjack():
                         print("\033[32mYOU WIN!\033[0m")
                         choice = input("\nNew game? (Y/N) ")
                         if choice.lower() == 'y':
+                            counter += 1
                             continue
                         else:
                             break
@@ -627,6 +660,7 @@ def play_blackjack():
                         print("\033[36mDRAW!\033[0m")
                         choice = input("\nNew game? (Y/N) ")
                         if choice.lower() == 'y':
+                            counter += 1
                             continue
                         else:
                             break
@@ -634,6 +668,7 @@ def play_blackjack():
                         print("\033[31mYOU LOSE!\033[0m")
                         choice = input("\nNew game? (Y/N) ")
                         if choice.lower() == 'y':
+                            counter += 1
                             continue
                         else:
                             break
@@ -642,6 +677,7 @@ def play_blackjack():
                     print("\033[32mYOU WIN!\033[0m")
                     choice = input("\nNew game? (Y/N) ")
                     if choice.lower() == 'y':
+                        counter += 1
                         continue
                     else:
                         break
@@ -649,6 +685,7 @@ def play_blackjack():
                     print("\033[36mDRAW!\033[0m")
                     choice = input("\nNew game? (Y/N) ")
                     if choice.lower() == 'y':
+                        counter += 1
                         continue
                     else:
                         break
@@ -656,6 +693,7 @@ def play_blackjack():
                     print("\033[31mYOU LOSE!\033[0m")
                     choice = input("\nNew game? (Y/N) ")
                     if choice.lower() == 'y':
+                        counter += 1
                         continue
                     else:
                         break
@@ -665,6 +703,7 @@ def play_blackjack():
                 print("\033[32mYOU WIN!\033[0m")
                 choice = input("\nNew game? (Y/N) ")
                 if choice.lower() == 'y':
+                    counter += 1
                     continue
                 else:
                     break
@@ -672,6 +711,7 @@ def play_blackjack():
                 print("\033[36mDRAW!\033[0m")
                 choice = input("\nNew game? (Y/N) ")
                 if choice.lower() == 'y':
+                    counter += 1
                     continue
                 else:
                     break
@@ -679,6 +719,7 @@ def play_blackjack():
                 print("\033[31mYOU LOSE!\033[0m")
                 choice = input("\nNew game? (Y/N) ")
                 if choice.lower() == 'y':
+                    counter += 1
                     continue
                 else:
                     break
