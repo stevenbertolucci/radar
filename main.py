@@ -42,6 +42,7 @@ green_color_profile = "\033[32m"     # Green text
 yellow_color_profile = "\033[33m"    # Yellow text
 blue_color_profile = "\033[34m"      # Blue text
 purple_color_profile = "\033[35m"    # Purple text
+cyan_color_profile = "\033[36m"      # Cyan text
 reset_color_profile = "\033[0m"      # Default CLI text color (gray)
 
 # Global Variables
@@ -92,6 +93,61 @@ def display_intro():
     print(
         f"{green_color_profile}-----------------------------------------------------------------------------------------"
         f"-------------------------------{reset_color_profile}")
+
+
+def display_weather_intro():
+    print(
+        f"{cyan_color_profile}-------------------------------------------------------------")
+
+    weather_ascii = f"""
+                              _   _               
+                             | | | |              
+          __      _____  __ _| |_| |__   ___ _ __ 
+          \ \ /\ / / _ \/ _` | __| '_ \ / _ \ '__|
+           \ V  V /  __/ (_| | |_| | | |  __/ |   
+            \_/\_/ \___|\__,_|\__|_| |_|\___|_|   
+    {reset_color_profile}"""
+
+    print(weather_ascii)
+
+    print(
+        f"{cyan_color_profile}-------------------------------------------------------------{reset_color_profile}")
+
+
+def display_local_news_intro():
+    print(
+        f"{red_color_profile}-------------------------------------------------------------")
+
+    local_news_ascii = f"""
+        __                     __   _   __                 
+       / /   ____  _________ _/ /  / | / /__ _      _______
+      / /   / __ \/ ___/ __ `/ /  /  |/ / _ \ | /| / / ___/
+     / /___/ /_/ / /__/ /_/ / /  / /|  /  __/ |/ |/ (__  ) 
+    /_____/\____/\___/\__,_/_/  /_/ |_/\___/|__/|__/____/  
+    {reset_color_profile}"""
+
+    print(local_news_ascii)
+
+    print(
+        f"{red_color_profile}-------------------------------------------------------------{reset_color_profile}")
+
+
+def display_news_intro():
+    print(
+        f"{yellow_color_profile}-----------------------------------------")
+
+    news_ascii = f"""
+         _   __                 
+        / | / /__ _      _______
+       /  |/ / _ \ | /| / / ___/
+      / /|  /  __/ |/ |/ (__  ) 
+     /_/ |_/\___/|__/|__/____/  
+    {reset_color_profile}"""
+
+    print(news_ascii)
+
+    print(
+        f"{yellow_color_profile}----------------------------------------{reset_color_profile}")
 
 
 def farewell():
@@ -783,12 +839,30 @@ while True:
         farewell()
 
     elif user_choice == '1':
+        if operating_system == 'win32':
+            os.system('cls')
+        if operating_system == 'linux' or operating_system == 'darwin':
+            os.system('clear')
+
+        display_weather_intro()
         get_weather(city_name)
 
     elif user_choice == '2':
+        if operating_system == 'win32':
+            os.system('cls')
+        if operating_system == 'linux' or operating_system == 'darwin':
+            os.system('clear')
+
+        display_local_news_intro()
         get_local_news(city_name)
 
     elif user_choice == '3':
+        if operating_system == 'win32':
+            os.system('cls')
+        if operating_system == 'linux' or operating_system == 'darwin':
+            os.system('clear')
+
+        display_news_intro()
         get_news()
 
     elif user_choice == '4':
