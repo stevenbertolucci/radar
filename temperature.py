@@ -13,7 +13,7 @@ def temperature_colors(temperature):
         return '\033[1;96m'
 
     elif 60 < temperature <= 70:
-        return '\033[0;103m'
+        return '\033[33m'
 
     elif 70 < temperature <= 75:
         return '\033[0;80m'

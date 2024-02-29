@@ -20,11 +20,17 @@ import platform
 import requests
 import datetime
 import urllib.request
+import webbrowser
+import subprocess
 from temperature import temperature_colors
 from conditions import condition
 from uv_index import uv_index
 from blackjack import play_blackjack
 from bs4 import BeautifulSoup
+# Windows when using pycaw
+from ctypes import cast, POINTER
+from comtypes import CLSCTX_ALL
+from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
 # Get operating system name
 operating_system = sys.platform
@@ -41,6 +47,7 @@ red_color_profile = "\033[31m"       # Red text
 green_color_profile = "\033[32m"     # Green text
 yellow_color_profile = "\033[33m"    # Yellow text
 blue_color_profile = "\033[34m"      # Blue text
+br_blue_color_profile = "\033[94m"   # Bright Blue text
 purple_color_profile = "\033[35m"    # Purple text
 cyan_color_profile = "\033[36m"      # Cyan text
 reset_color_profile = "\033[0m"      # Default CLI text color (gray)
@@ -148,6 +155,88 @@ def display_news_intro():
 
     print(
         f"{yellow_color_profile}----------------------------------------{reset_color_profile}")
+
+
+def display_time_intro():
+    print(
+        f"{purple_color_profile}---------------------------------------------------------------------------------------"
+        f"---------")
+
+    time_ascii = f"""
+         .----------------.  .----------------.  .----------------.  .----------------. 
+        | .--------------. || .--------------. || .--------------. || .--------------. |
+        | |  _________   | || |     _____    | || | ____    ____ | || |  _________   | |
+        | | |  _   _  |  | || |    |_   _|   | || ||_   \  /   _|| || | |_   ___  |  | |
+        | | |_/ | | \_|  | || |      | |     | || |  |   \/   |  | || |   | |_  \_|  | |
+        | |     | |      | || |      | |     | || |  | |\  /| |  | || |   |  _|  _   | |
+        | |    _| |_     | || |     _| |_    | || | _| |_\/_| |_ | || |  _| |___/ |  | |
+        | |   |_____|    | || |    |_____|   | || ||_____||_____|| || | |_________|  | |
+        | |              | || |              | || |              | || |              | |
+        | '--------------' || '--------------' || '--------------' || '--------------' |
+         '----------------'  '----------------'  '----------------'  '----------------' 
+    {reset_color_profile}"""
+
+    print(time_ascii)
+    print(
+        f"{purple_color_profile}---------------------------------------------------------------------------------------"
+        f"---------{reset_color_profile}")
+
+
+def display_tax_intro():
+    print(
+        f"{red_color_profile}-----------------------------------------------------------------------"
+        f"---------")
+
+    tax_ascii = """
+          _____                             ___             _             
+         |_   _|  __ _    __ __     o O O  | _ \   __ _    | |_     ___   
+           | |   / _` |   \ \ /    o       |   /  / _` |   |  _|   / -_)  
+          _|_|_  \__,_|   /_\_\   TS__[O]  |_|_\  \__,_|   _\__|   \___|  
+        _|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"| {======|_|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|
+        "`-0-0-'"`-0-0-'"`-0-0-'./o--000'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-' 
+    """ + reset_color_profile
+
+    print(tax_ascii)
+    print(
+        f"{red_color_profile}-----------------------------------------------------------------------"
+        f"---------{reset_color_profile}")
+
+
+def display_password_intro():
+    print(
+        f"{br_blue_color_profile}-----------------------------------------------------------------------"
+        f"--------------------------------")
+
+    password_ascii = f"""
+         __        __   __        __   __   __      __   ___       ___  __       ___  __   __  
+        |__)  /\  /__` /__` |  | /  \ |__) |  \    / _` |__  |\ | |__  |__)  /\   |  /  \ |__) 
+        |    /~~\ .__/ .__/ |/\| \__/ |  \ |__/    \__> |___ | \| |___ |  \ /~~\  |  \__/ |  \ 
+    {reset_color_profile}"""
+
+
+
+    print(password_ascii)
+    print(
+        f"{br_blue_color_profile}-----------------------------------------------------------------------"
+        f"--------------------------------{reset_color_profile}")
+
+
+def display_top_secret_intro():
+    print(
+        f"{green_color_profile}-----------------------------------------------------------------------"
+        f"-----------------------------------------------")
+
+    top_secret_ascii = f"""
+      ___ ___ ___   _____ ___  ___   ___ ___ ___ ___ ___ _____   ___   ___   ___ _   _ __  __ ___ _  _ _____ ___ 
+     | __| _ )_ _| |_   _/ _ \| _ \ / __| __/ __| _ \ __|_   _| |   \ / _ \ / __| | | |  \/  | __| \| |_   _/ __|
+     | _|| _ \| |    | || (_) |  _/ \__ \ _| (__|   / _|  | |   | |) | (_) | (__| |_| | |\/| | _|| .` | | | \__ \\
+     |_| |___/___|   |_| \___/|_|   |___/___\___|_|_\___| |_|   |___/ \___/ \___|\___/|_|  |_|___|_|\_| |_| |___/
+    {reset_color_profile}"""
+
+    print(top_secret_ascii)
+    print(
+        f"{green_color_profile}-----------------------------------------------------------------------"
+        f"-----------------------------------------------{reset_color_profile}")
 
 
 def farewell():
@@ -378,7 +467,7 @@ def get_local_news(city):
         if response.status_code == 200:
             clear_selected_line()
             data = response.json()
-            #print(data)
+            # print(data)
             articles = data.get("articles", [])
             total_results = data.get("totalResults", [])
 
@@ -659,7 +748,7 @@ def generate_password():
     if special_char_input.lower() != 'y' and special_char_input.lower() != 'n':
         while True:
             special_char_input = input("Please enter 'Y' for yes and 'N' for no: ")
-            if special_char_input.lower() == 'y' and special_char_input.lower() == 'n':
+            if special_char_input.lower() == 'y' or special_char_input.lower() == 'n':
                 break
 
     if special_char_input.lower() == 'y':
@@ -672,7 +761,7 @@ def generate_password():
     if uppercase_input.lower() != 'y' and uppercase_input.lower() != 'n':
         while True:
             uppercase_input = input("Please enter 'Y' for yes and 'N' for no: ")
-            if uppercase_input.lower() == 'y' and uppercase_input.lower() == 'n':
+            if uppercase_input.lower() == 'y' or uppercase_input.lower() == 'n':
                 break
 
     if uppercase_input.lower() == 'y':
@@ -685,7 +774,7 @@ def generate_password():
     if numbers_input.lower() != 'y' and numbers_input.lower() != 'n':
         while True:
             numbers_input = input("Please enter 'Y' for yes and 'N' for no: ")
-            if numbers_input.lower() == 'y' and numbers_input.lower() == 'n':
+            if numbers_input.lower() == 'y' or numbers_input.lower() == 'n':
                 break
 
     if numbers_input.lower() == 'y':
@@ -798,16 +887,19 @@ while True:
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
+
         display_intro()
-    print("\n\t1. Weather\n")
-    print(f"\t2. News for {city_name}\n")
-    print("\t3. Search the News\n")
-    print("\t4. Time Zone\n")
-    print("\t5. Tax Rates\n")
-    print("\t6. Enter New Zip Code\n")
-    print("\t7. Generate Password\n")
-    print("\t8. Blackjack!\n")
-    print("\t9. Exit\n")
+
+    print("\n\t[1] Weather\n")
+    print(f"\t[2] News for {city_name}\n")
+    print("\t[3] Search the News\n")
+    print("\t[4] Time Zone\n")
+    print("\t[5] Tax Rates\n")
+    print("\t[6] Enter New Zip Code\n")
+    print("\t[7] Generate Password\n")
+    print("\t[8] Blackjack!\n")
+    print("\t[9] FBI Top Secret Documents\n")
+    print("\t[10] Exit\n")
 
     while True:
 
@@ -819,7 +911,7 @@ while True:
             if operating_system == 'linux' or operating_system == 'darwin':
                 os.system('clear')
             farewell()
-        elif user_choice < '1' or user_choice > '9':
+        elif int(user_choice) < 1 or int(user_choice) > 10:
             clear_selected_line()
             print("\033[31mPlease pick a valid option.\033[0m")
             continue
@@ -828,6 +920,7 @@ while True:
                 os.system('cls')
             if operating_system == 'linux' or operating_system == 'darwin':
                 os.system('clear')
+
             display_intro()
             break
 
@@ -836,6 +929,7 @@ while True:
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
+
         farewell()
 
     elif user_choice == '1':
@@ -866,9 +960,21 @@ while True:
         get_news()
 
     elif user_choice == '4':
+        if operating_system == 'win32':
+            os.system('cls')
+        if operating_system == 'linux' or operating_system == 'darwin':
+            os.system('clear')
+
+        display_time_intro()
         get_time(city_name, latitude, longitude)
 
     elif user_choice == '5':
+        if operating_system == 'win32':
+            os.system('cls')
+        if operating_system == 'linux' or operating_system == 'darwin':
+            os.system('clear')
+
+        display_tax_intro()
         get_tax_rates(latitude, longitude)
 
     elif user_choice == '6':
@@ -876,6 +982,7 @@ while True:
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
+
         display_intro()
         while True:
             user_input = input("\033[33mEnter New Zip Code: \033[0m")
@@ -892,7 +999,8 @@ while True:
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
-        display_intro()
+
+        display_password_intro()
         generate_password()
 
     elif user_choice == '8':
@@ -903,6 +1011,74 @@ while True:
         play_blackjack()
 
     elif user_choice == '9':
+        if operating_system == 'win32':
+            os.system('cls')
+        if operating_system == 'linux' or operating_system == 'darwin':
+            os.system('clear')
+
+        display_top_secret_intro()
+
+        if operating_system == 'win32':
+            # Get the default audio device
+            devices = AudioUtilities.GetSpeakers()
+            interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+
+            # Control volume
+            volume = cast(interface, POINTER(IAudioEndpointVolume))
+            # Set volume to 30% of max volume
+            volume.SetMasterVolumeLevelScalar(1.0, None)
+
+        if operating_system == 'linux':
+            # Increase volume by 10%
+            subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "10%+"])
+
+        if operating_system == 'darwin':
+            # Increase volume by 10%
+            subprocess.call(
+                ["osascript", "-e", "set volume output volume (output volume of (get volume settings) + 10)"])
+
+        print("\033[31mWHAT YOU ARE ABOUT TO SEE IS TOP SECRET....")
+        time.sleep(3)
+        print("DO NOT SHARE THIS WITH ANYONE....")
+        time.sleep(3)
+        input("BY HITTING ENTER, YOU CONSIDERED YOURSELF WARNED....")
+
+        # URL of the "Never Gonna Give You Up" YouTube video
+        video_url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+
+        # Open the default web browser and play the video
+        webbrowser.open(video_url)
+
+        time.sleep(5)
+
+        print(f"""
+⡀⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣶⣤⣄⣀⠀⠀⠀⠀⠀⠀⠀⠉⠁⠀⣀⣀⠀⣀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄⡀⠀⠀⠀
+⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⣿⣿⣿⣛⣿⣿⣷⣿⣿⣯⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣏⠉⣿⠉⢹⠟⢉⠉⢻⣿⠉⢻⠋⠙⡏⣿⠋⢻⡏⠉⣿⠉⣉⣻⠀
+⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣻⡀⠈⢀⣿⠀⢸⠀⠀⣿⠀⢸⠀⠰⣿⣿⠀⢸⠁⢀⡟⠀⢹⣿⠀
+⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⡿⠿⠿⢿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣧⠀⣼⣿⠀⢸⡀⠀⣏⠀⢸⠀⠀⣿⣿⡄⠘⠀⢸⡇⠀⢰⣾⠀
+⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⡿⠋⠀⠀⠀⠀⠀⠈⠉⠉⠁⠀⠀⠈⢻⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣀⣿⣿⣆⡈⢁⣰⣿⣄⠘⢀⣼⣿⣿⣇⣀⣀⣼⣧⣀⣈⣹⡇
+⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⣿⣿⣿⣿⣿⣿⠟⠿⢿⣿⠿⠛⠛⠻⠿⠿⠻⠛⠉⠉⠉⠀
+⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⢀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣧⣄⠀⠀⠀⠀⠀⠀⣴⠶⡶⠿⣿⣿⠿⠿⢿⡿⠿⠿⣿⠿⢿⡿⢿⡿⠀⠀⠀⠀⠀⠀⠀
+⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⣿⣿⠀⠀⢨⣭⣽⣿⡇⠀⢠⣾⣿⣿⣷⣆⠀⠀⢸⣿⠀⠀⠀⠀⠀⠀⣿⠀⢱⡆⠈⣿⠀⢴⣾⡇⠀⣶⣿⠀⠘⡇⠀⡇⠀⠀⠀⠀⠀⠀⠀
+⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⠉⠛⠀⠀⠀⠀⠉⠁⠀⠀⠘⡏⠉⠉⠛⠋⠀⣠⣼⣿⠀⠀⠀⠀⠀⠀⣿⠀⢨⡁⠺⣿⠀⣈⣹⡇⠀⣉⣿⠀⡀⠁⠀⡇⠀⠀⠀⠀⠀⠀⠀
+⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⢹⡄⠀⠀⠀⠀⣿⣿⡿⠀⠀⠀⠀⠀⠀⣿⠀⠸⠇⠀⣿⠀⠹⢿⡇⠀⠿⢿⠀⢸⡀⠀⡇⠀⠀⠀⠀⠀⠀⠀
+⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⢷⣄⡀⠀⢠⡾⠋⠀⠛⢶⣶⣾⡇⠀⣠⠄ ⢰⣿⠟⠀⠀⠀⠀⠀⠀⠀⠻⢶⣶⡶⠚⠓⠶⠶⠾⠷⠶⠶⠾⠶⠾⠳⠾⠟⠀⠀⠀⠀⠀⠀⠀
+⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣹⡷⣠⠏⠙⢷⣶⠲⠶⠶⣷⣶⡿⠋⢀ ⣾⠃⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣹⣧⡀⢀⠀⠀⣀⣀⣀⡀⢀⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⠟⣫⣽⠃⠀⠀⠀⠉⠉⠙⠛⠋⠀⠀⢀⣾⡃⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠉⢉⡉⠻⡏⠉⣿⠟⢉⡉⠙⣿⠉⢹⡏⢉⡿⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠛⠁⠀⣼⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⡏⢳⡄⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠸⠇⣰⡇⠀⣿⠀⢸⣧⣀⣿⠀⠈⠀⣼⠁⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢀⣴⠏⠀⠀⠀⢸⣿⣿⡀⠀⠀⠰⣦⣄⡀⣀⣤⡾⣿⣿⣧⠀⠻⢦⣄⡀⠀⠀⠀⠀⠀⣿⠀⢸⠀⠈⡇⠀⣿⠀⢸⡟⠛⣿⠀⢠⠀⢹⣆⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠘⠁⠀⠀⠀⠀⣾⣿⣿⣷⣄⡀⠀⠙⠿⣿⣏⣽⣿⣿⣿⣿⠄⢸⣧⠈⠙⠶⣤⣀⠀⠀⣿⣀⣸⣄⣠⣷⣀⣿⣦⣀⣁⣠⣿⣀⣸⣧⣀⣿⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⠀⠀⠹⣆⠀⠀⠀⠉⠳⣦⡀⠉⠉⠙⠻⣿⠉⠁⠀⠉⠉⠀⠀⠈⠉⠀⠉⠹⠇⠀⠀⠀⠀⠀⠀
+⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⢿⡆⠀⠀⠀⠀⠻⣿⠓⠒⠲⢦⣹⠷⠒⠲⣶⡖⠒⣶⣶⠒⢶⣾⠗⠒⠲⡶⠒⡖⠶⣄
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⡞⣿⠀⠀⠀⠀⠀⢹⠀⢹⡀⢈⡏⠀⣿⠀⢸⡇⠀⣿⡟⠀⢸⣿⠀⢸⣶⡇⠀⢳⠀⢸
+⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⢀⣰⠃⢹⡆⠀⠀⠀⠀⢸⠀⢠⠀⠛⡇⠀⣿⠀⢸⡇⠀⣿⡇⠀⢸⣿⠀⢠⣬⡇⠀⢸⠀⢸
+⠀⠀⠀⠀⠀⠀⠀⠙⠛⠛⠋⠉⠀⠺⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠶⠞⠋⠀⠀⠀⢿⠀⠀⠀⠀⣸⠀⢸⠀⢰⣧⠀⠛⠀⣸⡇⠀⠛⣧⠀⠘⢻⠀⠘⠛⡇⠀⠚⠀⢸
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠆⠀⠀⠀⠿⠓⠛⠓⠛⠉⠙⠒⠚⠉⠛⣛⡚⠛⠛⠛⠛⠛⠓⡚⠛⠛⠓⠛⠉
+""")
+        print("\033[36m\nDid you really think I would share those kind of documents? LOL")
+        input("\033[32mPress Enter to continue...\033[0m")
+
+    elif user_choice == '10':
         if operating_system == 'win32':
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
