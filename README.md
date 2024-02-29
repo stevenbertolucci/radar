@@ -7,8 +7,9 @@ feature that users can generate for personal use.
 
 # Packages Needed to be Installed Before Running
 Please make sure to download requests and beautifulsoup4
-**Requests:** `pip install requests`
+**requests:** `pip install requests`
 **beautifulsoup4:** `pip install beautifulsoup4`
+**pycaw:** `pip install pycaw`
 
 ## Supports Cross-Platform
 This application supports Windows, MacOS, and Linux
