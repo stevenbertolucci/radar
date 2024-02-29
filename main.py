@@ -29,8 +29,17 @@ from blackjack import play_blackjack
 from bs4 import BeautifulSoup
 # Windows when using pycaw
 from ctypes import cast, POINTER
-from comtypes import CLSCTX_ALL
-from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+try:
+    from comtypes import CLSCTX_ALL
+except ModuleNotFoundError:
+    CLSCTX_ALL = None  # Define CLSCTX_ALL as None or handle the absence of comtypes accordingly
+    # print("Warning: comtypes module not found. Some functionality may be limited.")
+
+try:
+    from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+except ModuleNotFoundError:
+    print("Warning: pycaw module not found. Some functionality may be limited.")
+
 
 # Get operating system name
 operating_system = sys.platform
@@ -837,7 +846,52 @@ def generate_password():
 
     print("\nGenerated Password: ", password)
 
-    input("\n\033[32mPress Enter to continue...\033[0m")
+    save_password = input("\nWould you like to save the password? (Y/N) ")
+
+    while True:
+        if save_password.lower() != 'y' and save_password.lower() != 'n':
+            save_password = input("Please choose 'Y' for yes or 'N' for no? (Y/N) ")
+            continue
+        elif save_password.lower() == 'y':
+            save_password = True
+            break
+        else:
+            save_password = False
+            break
+
+    if save_password:
+
+        # Get Downloads folder
+        downloads_path = os.path.join(os.path.expanduser("~"), "Downloads")
+
+        # Append the file name to the Downloads path
+        file_path = os.path.join(downloads_path, "password.txt")
+
+        # Check if the file already exists
+        if os.path.exists(file_path):
+            # File already exists, prompt the user to confirm overwrite
+            usr_input = input("The file already exists. Do you want to overwrite it? (yes/no): ").lower()
+            if usr_input != 'yes':
+                new_file_name = input("What would you like to name this file: ")
+                # Append the file name to the Downloads path
+                file_path = os.path.join(downloads_path, new_file_name)
+                # Check if the file name includes .txt extension, if not, append it
+                if not file_path.endswith('.txt'):
+                    file_path += '.txt'
+
+        # Write the password to the file
+        with open(file_path, "w") as file:
+            # Write the content of the text variable to the file
+            file.write(password)
+
+        # Display file path
+        print("\033[31mPassword saved to:\033[0m", file_path)
+        input("\n\033[32mPress Enter to continue...\033[0m")
+
+    if not save_password:
+        print("\n\033[33mThank you for using password generator!\033[0m")
+        time.sleep(2.5)
+
     if operating_system == 'win32':
         os.system('cls')
     if operating_system == 'linux' or operating_system == 'darwin':
