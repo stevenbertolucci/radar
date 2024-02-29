@@ -6,9 +6,9 @@ Rates, and a Zip Code. The password generator is a bonus
 feature that users can generate for personal use.
 
 # Packages Needed to be Installed Before Running
-Please make sure to download requests and beautifulsoup4
-**requests:** `pip install requests`
-**beautifulsoup4:** `pip install beautifulsoup4`
+Please make sure to download requests, beautifulsoup4, and pycaw: <br />
+**requests:** `pip install requests` <br />
+**beautifulsoup4:** `pip install beautifulsoup4` <br />
 **pycaw:** `pip install pycaw`
 
 ## Supports Cross-Platform
