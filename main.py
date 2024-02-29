@@ -1025,17 +1025,31 @@ while True:
 
             # Control volume
             volume = cast(interface, POINTER(IAudioEndpointVolume))
+
+            # Check if the volume is muted
+            is_muted = volume.GetMute()
+
+            # Unmute the audio if it's muted
+            if is_muted:
+                volume.SetMute(0, None)
+
             # Set volume to 30% of max volume
             volume.SetMasterVolumeLevelScalar(1.0, None)
 
         if operating_system == 'linux':
+            # Unmute the volume
+            subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "unmute"])
+
             # Increase volume by 10%
-            subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "10%+"])
+            subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "100%+"])
 
         if operating_system == 'darwin':
+            # Unmute the volume
+            subprocess.call(["osascript", "-e", "set volume without output muted"])
+
             # Increase volume by 10%
             subprocess.call(
-                ["osascript", "-e", "set volume output volume (output volume of (get volume settings) + 10)"])
+                ["osascript", "-e", "set volume output volume (output volume of (get volume settings) + 100)"])
 
         print("\033[31mWHAT YOU ARE ABOUT TO SEE IS TOP SECRET....")
         time.sleep(3)
