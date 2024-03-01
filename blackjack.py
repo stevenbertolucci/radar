@@ -39,8 +39,8 @@ def display_blackjack_intro():
 
 
 def cards():
-
     if operating_system == 'win32':
+
         deck_of_cards = {
             f""" 
                 --------
@@ -49,7 +49,7 @@ def cards():
                |   ♠️   |
                |        |
                |       A|
-                -------- """: 1,
+                -------- """: 11,
             f"""\033[31m 
                 --------
                |A       |
@@ -57,7 +57,7 @@ def cards():
                |   ♥️   |
                |        |
                |       A|
-                -------- \033[0m""": 1,
+                -------- \033[0m""": 11,
             f"""\033[31m 
                 --------
                |A       |
@@ -65,7 +65,7 @@ def cards():
                |   ♦️   |
                |        |
                |       A|
-                -------- \033[0m""": 1,
+                -------- \033[0m""": 11,
             f"""
                 --------
                |A       |
@@ -73,7 +73,7 @@ def cards():
                |   ♣️   |
                |        |
                |       A|
-                -------- """: 1,
+                -------- """: 11,
             f"""
                 --------
                |2       |
@@ -471,7 +471,7 @@ def cards():
                |   ♠️    |
                |        |
                |       A|
-                -------- """: 1,
+                -------- """: 11,
             f"""\033[31m 
                 --------
                |A       |
@@ -479,7 +479,7 @@ def cards():
                |   ♥️    |
                |        |
                |       A|
-                -------- \033[0m""": 1,
+                -------- \033[0m""": 11,
             f"""\033[31m 
                 --------
                |A       |
@@ -487,7 +487,7 @@ def cards():
                |   ♦️    |
                |        |
                |       A|
-                -------- \033[0m""": 1,
+                -------- \033[0m""": 11,
             f"""
                 --------
                |A       |
@@ -495,7 +495,7 @@ def cards():
                |   ♣️    |
                |        |
                |       A|
-                -------- """: 1,
+                -------- """: 11,
             f"""
                 --------
                |2       |
@@ -927,6 +927,9 @@ def play_blackjack():
         dealer_values.append(values)
         dealer_total += sum(dealer_values)
 
+        if dealer_total > 21 and (dealer_values[0] == 11 or dealer_values[1] == 11):
+            dealer_total -= 10
+
         dealer_hand = dealer_cards[0] + " " + dealer_cards[1]
 
         # Player Cards
@@ -942,6 +945,9 @@ def play_blackjack():
         player_values.append(values)
         player_total += sum(player_values)
 
+        if player_total > 21 and (player_values[0] == 11 or player_values == 11):
+            player_total -= 10
+
         # Add the cards to the player's hand
         player_hand = player_cards[0] + " " + player_cards[1]
 
@@ -950,7 +956,6 @@ def play_blackjack():
         print("Dealer's Total: ", dealer_total)
         print("\nYour hand: \n", player_hand)
         print("Player's Total: ", player_total)
-
 
         # Check to see if either hand got a blackjack. If so, display message
         # and exit
@@ -1004,6 +1009,11 @@ def play_blackjack():
             # Count the cards
             player_total2 += sum(player_values)
 
+            if player_total2 > 21:
+                for card in player_values:
+                    if card == 11:
+                        player_total2 -= 10
+
             # Display the cards from both players
             print("Dealer's hand: \n", dealer_hand)
             print("Dealer's Total: ", dealer_total)
@@ -1051,6 +1061,11 @@ def play_blackjack():
 
                     # Count the cards
                     player_total3 += sum(player_values)
+
+                    if player_total3 > 21:
+                        for card in player_values:
+                            if card == 11:
+                                player_total3 -= 10
 
                     # Display the cards from both players
                     print("Dealer's hand: \n", dealer_hand)
@@ -1115,6 +1130,11 @@ def play_blackjack():
                         # Count the cards
                         dealer_total2 += sum(dealer_values)
 
+                        if dealer_total2 > 21:
+                            for card in dealer_values:
+                                if card == 11:
+                                    dealer_total2 -= 10
+
                         # Display the cards from both players
                         print("Dealer's hand: \n", dealer_hand)
                         print("Dealer's Total: ", dealer_total2)
@@ -1178,6 +1198,11 @@ def play_blackjack():
                             # Count the cards
                             dealer_total3 += sum(dealer_values)
 
+                            if dealer_total3 > 21:
+                                for card in dealer_values:
+                                    if card == 11:
+                                        dealer_total3 -= 10
+
                             # Display the cards from both players
                             print("Dealer's hand: \n", dealer_hand)
                             print("Dealer's Total: ", dealer_total3)
@@ -1240,6 +1265,11 @@ def play_blackjack():
                         # Count the cards
                         dealer_total2 += sum(dealer_values)
 
+                        if dealer_total2 > 21:
+                            for card in dealer_values:
+                                if card == 11:
+                                    dealer_total2 -= 10
+
                         # Display the cards from both players
                         print("Dealer's hand: \n", dealer_hand)
                         print("Dealer's Total: ", dealer_total2)
@@ -1273,6 +1303,14 @@ def play_blackjack():
                                 continue
                             else:
                                 break
+                        elif player_total2 < dealer_total2:
+                            print("\033[31mYOU LOSE!\033[0m")
+                            choice = input("\nNew game? (Y/N) ")
+                            if choice.lower() == 'y':
+                                counter += 1
+                                continue
+                            else:
+                                break
 
                         if player_total2 > dealer_total2:
 
@@ -1295,6 +1333,11 @@ def play_blackjack():
 
                             # Count the cards
                             dealer_total3 += sum(dealer_values)
+
+                            if dealer_total3 > 21:
+                                for card in dealer_values:
+                                    if card == 11:
+                                        dealer_total3 -= 10
 
                             # Display the cards from both players
                             print("Dealer's hand: \n", dealer_hand)
@@ -1384,6 +1427,11 @@ def play_blackjack():
                 # Count the cards
                 dealer_total2 += sum(dealer_values)
 
+                if dealer_total2 > 21:
+                    for card in dealer_values:
+                        if card == 11:
+                            dealer_total2 -= 10
+
                 # Display the cards from both players
                 print("Dealer's hand: \n", dealer_hand)
                 print("Dealer's Total: ", dealer_total2)
@@ -1445,6 +1493,11 @@ def play_blackjack():
 
                     # Count the cards
                     dealer_total3 += sum(dealer_values)
+
+                    if dealer_total3 > 21:
+                        for card in dealer_values:
+                            if card == 11:
+                                dealer_total3 -= 10
 
                     # Display the cards from both players
                     print("Dealer's hand: \n", dealer_hand)
