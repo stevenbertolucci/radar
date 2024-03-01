@@ -943,7 +943,7 @@ def play_blackjack():
         player_values.append(values)
         player_total += sum(player_values)
 
-        if player_total > 21 and (player_values[0] == 11 or player_values == 11):
+        if player_total > 21 and (player_values[0] == 11 or player_values[1] == 11):
             player_total -= 10
 
         # Add the cards to the player's hand

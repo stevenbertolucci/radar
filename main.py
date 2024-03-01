@@ -1078,7 +1078,7 @@ while True:
                 volume.SetMute(0, None)
 
             # Set volume to 30% of max volume
-            volume.SetMasterVolumeLevelScalar(0.2, None)
+            volume.SetMasterVolumeLevelScalar(1.0, None)
 
         if operating_system == 'linux':
             # Unmute the volume
@@ -1138,7 +1138,7 @@ while True:
 ⠀⠀⠀⠀⠀⠀⠀⠙⠛⠛⠋⠉⠀⠺⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠶⠞⠋⠀⠀⠀⢿⠀⠀⠀⠀⣸⠀⢸⠀⢰⣧⠀⠛⠀⣸⡇⠀⠛⣧⠀⠘⢻⠀⠘⠛⡇⠀⠚⠀⢸
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠆⠀⠀⠀⠿⠓⠛⠓⠛⠉⠙⠒⠚⠉⠛⣛⡚⠛⠛⠛⠛⠛⠓⡚⠛⠛⠓⠛⠉\033[0m
 """)
-        print("\033[36m\nDid you really think I would share those kind of documents? LOL")
+        print("\033[36m\nDid you really think I would illegally share those kind of documents? LOL")
         input("\033[32mPress Enter to continue...\033[0m")
 
     elif user_choice == '10':
