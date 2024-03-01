@@ -26,6 +26,7 @@ from temperature import temperature_colors
 from conditions import condition
 from uv_index import uv_index
 from blackjack import play_blackjack
+from help import help_menu
 from bs4 import BeautifulSoup
 # Windows when using pycaw
 from ctypes import cast, POINTER
@@ -365,7 +366,7 @@ def get_weather(city):
     Function get_weather that requests weather info by calling
     WeatherAPI to retrieve weather information for that zip code.
     """
-
+    position = "weather"
     print(f"\033[31mRetrieving Weather information for {city}. Please wait... \033[0m")
     time.sleep(0.5)
     api_key = 'dd86ae75f9b94cafb28195718241501'
@@ -390,7 +391,49 @@ def get_weather(city):
         clear_selected_line()
         print("Error retrieving weather")
 
-    input("\n\033[32mPress Enter to Continue...\033[0m")
+    while True:
+        usr_input = input("\n\033[32mPress Enter to Continue... \033[0m")
+        if usr_input == '-h' or usr_input == '--help' or usr_input == '-help':
+
+            # Clear the screen
+            if operating_system == 'win32':
+                os.system('cls')
+            if operating_system == 'linux' or operating_system == 'darwin':
+                os.system('clear')
+
+            help_menu(position)
+
+            # Clear the screen
+            if operating_system == 'win32':
+                os.system('cls')
+            if operating_system == 'linux' or operating_system == 'darwin':
+                os.system('clear')
+
+            display_weather_intro()
+            api_key = 'dd86ae75f9b94cafb28195718241501'
+            url = f'http://api.weatherapi.com/v1/current.json?key={api_key}&q={user_input}&aqi=no'
+
+            response = requests.get(url)
+
+            if response.status_code == 200:
+                data = response.json()
+                print("\033[36mWeather information for", city + ":\033[0m")
+                print("Name:", data["location"]["name"])
+                print("Region:", data["location"]["region"])
+                print(f"Temperature (F): {temperature_colors(data['current']['temp_f'])}{data['current']['temp_f']}\033[0m")
+                print("Condition:", condition(data["current"]["condition"]["text"]), data["current"]["condition"]["text"],
+                      "\033[0m")
+                print("Wind Speed (mph):", data["current"]["wind_mph"])
+                print("Wind Direction:", data["current"]["wind_dir"])
+                print("Humidity:", data["current"]["humidity"], "%")
+                print("Feels Like (F):", data["current"]["feelslike_f"])
+                print("UV Index:", uv_index(data["current"]["uv"]), data["current"]["uv"], "\033[0m")
+            else:
+                print("Error retrieving weather")
+
+        else:
+            break
+
     if operating_system == 'win32':
         os.system('cls')
     if operating_system == 'linux' or operating_system == 'darwin':
@@ -534,7 +577,27 @@ def get_news():
     the user and then searches news for that search term.
     """
 
-    search_result = input("What would you like to read about? ")
+    position = "news"
+    while True:
+        search_result = input("What would you like to read about? ")
+
+        if search_result == '-h' or search_result == '--help' or search_result == '-help':
+            if operating_system == 'win32':
+                os.system('cls')
+            if operating_system == 'linux' or operating_system == 'darwin':
+                os.system('clear')
+
+            help_menu(position)
+
+            if operating_system == 'win32':
+                os.system('cls')
+            if operating_system == 'linux' or operating_system == 'darwin':
+                os.system('clear')
+
+            display_news_intro()
+        else:
+            break
+
     clear_selected_line()
     print("\033[31mRetrieving News. Please wait... \033[0m")
     time.sleep(0.5)
@@ -621,6 +684,7 @@ def get_time(city, latitude, longitude):
     and it is free to use.
     """
 
+    position = "time"
     print(f"\033[31mRetrieving time information for {city}. Please wait... \033[0m")
     time.sleep(0.5)
     url = f"https://timeapi.io/api/Time/current/coordinate?latitude={latitude}&longitude={longitude}"
@@ -640,7 +704,40 @@ def get_time(city, latitude, longitude):
     else:
         print(f"Error: {response.status_code}")
 
-    input("\n\033[32mPress Enter to continue...\033[0m")
+    while True:
+        usr_input = input("\n\033[32mPress Enter to continue... \033[0m")
+        if usr_input == '-h' or usr_input == '-help' or usr_input == '--help':
+            if operating_system == 'win32':
+                os.system('cls')
+            if operating_system == 'linux' or operating_system == 'darwin':
+                os.system('clear')
+
+            help_menu(position)
+
+            if operating_system == 'win32':
+                os.system('cls')
+            if operating_system == 'linux' or operating_system == 'darwin':
+                os.system('clear')
+
+            display_time_intro()
+            url = f"https://timeapi.io/api/Time/current/coordinate?latitude={latitude}&longitude={longitude}"
+
+            parameters = {
+                "format": "json",
+            }
+
+            response = requests.get(url, params=parameters)
+
+            if response.status_code == 200:
+                data = response.json()
+                timezone = data.get("timeZone")
+                current_time = data.get("time")
+                print(f"\033[36mTime Info for {city}:\033[0m", "\nTime Zone: ", timezone, "\nTime: ", current_time)
+            else:
+                print(f"Error: {response.status_code}")
+        else:
+            break
+
     if operating_system == 'win32':
         os.system('cls')
     if operating_system == 'linux' or operating_system == 'darwin':
@@ -718,6 +815,8 @@ def generate_password():
         and numbers.
     """
 
+    position = 'password'
+
     # Arrays that will contain special data
     lower_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
                    'u', 'v', 'w', 'x', 'y', 'z']
@@ -730,10 +829,30 @@ def generate_password():
 
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
-    # Start of Prompt
-    passwd_length = int(input("How long would you like the password to be? (Minimum: 8 characters. Maximum: "
-                        "32 characters): "))
+    while True:
+        # Start of Prompt
+        passwd_length = input("How long would you like the password to be? (Minimum: 8 characters. Maximum: "
+                            "32 characters): ")
 
+        if passwd_length == '-h' or passwd_length == '-help' or passwd_length == '--help':
+            if operating_system == 'win32':
+                os.system('cls')
+            if operating_system == 'linux' or operating_system == 'darwin':
+                os.system('clear')
+
+            help_menu(position)
+
+            if operating_system == 'win32':
+                os.system('cls')
+            if operating_system == 'linux' or operating_system == 'darwin':
+                os.system('clear')
+
+            display_password_intro()
+        else:
+            break
+
+    # Now convert password to integer
+    passwd_length = int(passwd_length)
     while True:
         if passwd_length < 8 or passwd_length > 32:
             passwd_length = int(input("Please enter a valid password length: "))
@@ -946,7 +1065,35 @@ while True:
 
     while True:
 
+        position = "default"
         user_choice = input(f"{yellow_color_profile}Pick an option: {reset_color_profile}")
+
+        if user_choice.lower() == '-h' or user_choice.lower() == '-help' or user_choice.lower() == '--help':
+            if operating_system == 'win32':
+                os.system('cls')
+            if operating_system == 'linux' or operating_system == 'darwin':
+                os.system('clear')
+
+            help_menu(position)
+
+            if operating_system == 'win32':
+                os.system('cls')
+            if operating_system == 'linux' or operating_system == 'darwin':
+                os.system('clear')
+
+            display_intro()
+            print("\n\t[1] Weather\n")
+            print(f"\t[2] News for {city_name}\n")
+            print("\t[3] Search the News\n")
+            print("\t[4] Time Zone\n")
+            print("\t[5] Tax Rates\n")
+            print("\t[6] Enter New Zip Code\n")
+            print("\t[7] Generate Password\n")
+            print("\t[8] Blackjack!\n")
+            print("\t[9] FBI Top Secret Documents\n")
+            print("\t[10] Exit\n")
+
+            continue
 
         if user_choice.lower() == 'quit' or user_choice.lower() == 'exit':
             if operating_system == 'win32':
@@ -1060,6 +1207,7 @@ while True:
         if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
 
+        position = "rickroll"
         display_top_secret_intro()
 
         if operating_system == 'win32':
@@ -1099,7 +1247,29 @@ while True:
         time.sleep(3)
         print("\t\t\t\t\t\U000026A0  DO NOT SHARE THIS WITH ANYONE....\U000026A0")
         time.sleep(3)
-        input("\t\t\t\t\U000026A0  BY HITTING ENTER, YOU CONSIDERED YOURSELF WARNED....\U000026A0\033[0m ")
+        usr_input = input("\t\t\t\t\U000026A0  BY HITTING ENTER, YOU CONSIDERED YOURSELF WARNED....\U000026A0\033[0m ")
+
+        while True:
+            if usr_input == '-h' or usr_input == '--help' or usr_input == '-help':
+                if operating_system == 'win32':
+                    os.system('cls')
+                if operating_system == 'linux' or operating_system == 'darwin':
+                    os.system('clear')
+
+                help_menu(position)
+
+                if operating_system == 'win32':
+                    os.system('cls')
+                if operating_system == 'linux' or operating_system == 'darwin':
+                    os.system('clear')
+
+                display_top_secret_intro()
+                print("\n\n\t\t\t\t\033[31m  \U000026A0   WHAT YOU ARE ABOUT TO SEE IS TOP SECRET....\U000026A0")
+                print("\t\t\t\t\t\U000026A0  DO NOT SHARE THIS WITH ANYONE....\U000026A0")
+                usr_input = input(
+                    "\t\t\t\t\U000026A0  BY HITTING ENTER, YOU CONSIDERED YOURSELF WARNED....\U000026A0\033[0m ")
+            else:
+                break
 
         # URL of the "Never Gonna Give You Up" YouTube video
         video_url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
@@ -1107,7 +1277,7 @@ while True:
         # Open the default web browser and play the video
         webbrowser.open(video_url)
 
-        time.sleep(6)
+        time.sleep(3)
         if operating_system == 'win32':
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':

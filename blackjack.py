@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import random
+from help import help_menu
 
 # Define ANSI escape codes for colors
 red_color_profile = "\033[31m"       # Red text
@@ -889,6 +890,7 @@ def draw_card(deck):
 
 
 def play_blackjack():
+    position = "blackjack"
     counter = 0
 
     while True:
@@ -982,8 +984,31 @@ def play_blackjack():
             else:
                 break
 
-        # Ask user (YOU) if they want to hit or stay
-        usr_input = input("Hit (1) or Stay (2)? ")
+        # Display help menu if needed
+        while True:
+            # Ask user (YOU) if they want to hit or stay
+            usr_input = input("Hit (1) or Stay (2)? ")
+            if usr_input == '-h' or usr_input == '-help' or usr_input == '--help':
+                if operating_system == 'win32':
+                    os.system('cls')
+                if operating_system == 'linux' or operating_system == 'darwin':
+                    os.system('clear')
+
+                help_menu(position)
+
+                if operating_system == 'win32':
+                    os.system('cls')
+                if operating_system == 'linux' or operating_system == 'darwin':
+                    os.system('clear')
+
+                display_blackjack_intro()
+                # Display the cards from both players
+                print("Dealer's hand: \n", dealer_hand)
+                print("Dealer's Total: ", dealer_total)
+                print("\nYour hand: \n", player_hand)
+                print("Player's Total: ", player_total)
+            else:
+                break
 
         # Players Turn
         if usr_input == '1':
@@ -1037,8 +1062,33 @@ def play_blackjack():
                 else:
                     break
             elif player_total2 < 21:
-                # Ask user if they want to hit or stay
-                usr_input = input("Hit (1) or Stay (2)? ")
+
+                # Display help menu if needed
+                while True:
+                    # Ask user (YOU) if they want to hit or stay
+                    usr_input = input("Hit (1) or Stay (2)? ")
+                    if usr_input == '-h' or usr_input == '-help' or usr_input == '--help':
+                        if operating_system == 'win32':
+                            os.system('cls')
+                        if operating_system == 'linux' or operating_system == 'darwin':
+                            os.system('clear')
+
+                        help_menu(position)
+
+                        if operating_system == 'win32':
+                            os.system('cls')
+                        if operating_system == 'linux' or operating_system == 'darwin':
+                            os.system('clear')
+
+                        display_blackjack_intro()
+                        # Display the cards from both players
+                        print("Dealer's hand: \n", dealer_hand)
+                        print("Dealer's Total: ", dealer_total)
+                        print("\nYour hand: \n", player_hand)
+                        print("Player's Total: ", player_total)
+                    else:
+                        break
+
                 if usr_input == '1':
 
                     # Refresh screen
