@@ -82,30 +82,16 @@ def display_intro():
         f"{green_color_profile}-----------------------------------------------------------------------------------------"
         f"-------------------------------")
     radar_ascii = f"""{green_color_profile}
-                                                                 dddddddd
-              RRRRRRRRRRRRRRRRR                                  d::::::d
-              R::::::::::::::::R                                 d::::::d
-              R::::::RRRRRR:::::R                                d::::::d
-              RR:::::R     R:::::R                               d::::::d
-                R::::R     R:::::R    aaaaaaaaaaaaa        ddddddddd:::::d     aaaaaaaaaaaaa    rrrrr   rrrrrrrrr
-                R::::R     R:::::R    a::::::::::::a     dd::::::::::::::d     a::::::::::::a   r::::rrr:::::::::r
-                R::::RRRRRR:::::R     aaaaaaaaa:::::a   d::::::::::::::::d     aaaaaaaaa:::::a  r:::::::::::::::::r
-                R:::::::::::::RR               a::::a  d:::::::ddddd:::::d              a::::a  rr::::::rrrrr::::::r
-                R::::RRRRRR:::::R       aaaaaaa:::::a  d::::::d    d:::::d       aaaaaaa:::::a   r:::::r     r:::::r
-                R::::R     R:::::R    aa::::::::::::a  d:::::d     d:::::d     aa::::::::::::a   r:::::r     rrrrrrr
-                R::::R     R:::::R   a::::aaaa::::::a  d:::::d     d:::::d    a::::aaaa::::::a   r:::::r
-                R::::R     R:::::R  a::::a    a:::::a  d:::::d     d:::::d   a::::a    a:::::a   r:::::r
-              RR:::::R     R:::::R  a::::a    a:::::a  d::::::ddddd::::::dd  a::::a    a:::::a   r:::::r
-              R::::::R     R:::::R  a:::::aaaa::::::a   d:::::::::::::::::d  a:::::aaaa::::::a   r:::::r
-              R::::::R     R:::::R   a::::::::::aa:::a   d:::::::::ddd::::d   a::::::::::aa:::a  r:::::r
-              RRRRRRRR     RRRRRRR    aaaaaaaaaa  aaaa    ddddddddd   ddddd    aaaaaaaaaa  aaaa  rrrrrrr   
+                                     ██████╗   █████╗  ██████╗   █████╗  ██████╗ 
+                                     ██╔══██╗ ██╔══██╗ ██╔══██╗ ██╔══██╗ ██╔══██╗
+                                     ██████╔╝ ███████║ ██║  ██║ ███████║ ██████╔╝
+                                     ██╔══██╗ ██╔══██║ ██║  ██║ ██╔══██║ ██╔══██╗
+                                     ██║  ██║ ██║  ██║ ██████╔╝ ██║  ██║ ██║  ██║
+                                     ╚═╝  ╚═╝ ╚═╝  ╚═╝ ╚═════╝  ╚═╝  ╚═╝ ╚═╝  ╚═╝  v0.1  
     {reset_color_profile}"""
 
     print(radar_ascii)
-    print(f"\t\t\t\t{purple_color_profile}    ASCII text was generated using a web-based generator: "
-          f"\n\t\t\t{blue_color_profile}    https://patorjk.com/software/taag/#p=display&h=2&v=3&f=Doh&t=Radar")
-    print(f"\t\t\t\t\t{purple_color_profile}    Retrieved from: Patrick Gillespie")
-    print(f"\n\t\t\t\t\t{red_color_profile}    Copyrighted by Steven Bertolucci\u00A9")
+    print(f"\t\t\t\t\t{red_color_profile}   Copyrighted by Steven Bertolucci\u00A9")
     print(
         f"{green_color_profile}-----------------------------------------------------------------------------------------"
         f"-------------------------------{reset_color_profile}")
@@ -308,6 +294,7 @@ def validate_input(usr_input):
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
+        display_intro()
         farewell()
         time.sleep(3)
         exit(0)
@@ -907,10 +894,12 @@ def generate_password():
 
 # Display Intro banner
 display_intro()
+print(f"\n\t\t\t\t{purple_color_profile}    ASCII text was generated using a web-based generator: "
+      f"\n\t\t\t{blue_color_profile}    https://patorjk.com/software/taag/#p=display&h=2&v=3&f=Doh&t=Radar")
+print(f"\t\t\t\t\t{purple_color_profile}    Retrieved from: Patrick Gillespie")
 
 # Display prompt to user and wait for them to hit 'Enter'
-input("\n\n\n\n\t\t\t            \U0001F44B Welcome to Radar! Press 'enter' to continue...")
-clear_selected_line()
+input("\n\n\n\t\t\t            \U0001F44B \033[33mWelcome to Radar! Press 'enter' to continue...")
 
 if operating_system == 'win32':
     os.system('cls')
@@ -964,6 +953,7 @@ while True:
                 os.system('cls')
             if operating_system == 'linux' or operating_system == 'darwin':
                 os.system('clear')
+            display_intro()
             farewell()
         elif int(user_choice) < 1 or int(user_choice) > 10:
             clear_selected_line()
@@ -983,7 +973,7 @@ while True:
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
-
+        display_intro()
         farewell()
 
     elif user_choice == '1':
@@ -1088,7 +1078,7 @@ while True:
                 volume.SetMute(0, None)
 
             # Set volume to 30% of max volume
-            volume.SetMasterVolumeLevelScalar(1.0, None)
+            volume.SetMasterVolumeLevelScalar(0.2, None)
 
         if operating_system == 'linux':
             # Unmute the volume
@@ -1105,11 +1095,11 @@ while True:
             subprocess.call(
                 ["osascript", "-e", "set volume output volume (output volume of (get volume settings) + 100)"])
 
-        print("\033[31mWHAT YOU ARE ABOUT TO SEE IS TOP SECRET....")
+        print("\n\n\t\t\t\t\033[31m  \U000026A0   WHAT YOU ARE ABOUT TO SEE IS TOP SECRET....\U000026A0")
         time.sleep(3)
-        print("DO NOT SHARE THIS WITH ANYONE....")
+        print("\t\t\t\t\t\U000026A0  DO NOT SHARE THIS WITH ANYONE....\U000026A0")
         time.sleep(3)
-        input("BY HITTING ENTER, YOU CONSIDERED YOURSELF WARNED....")
+        input("\t\t\t\t\U000026A0  BY HITTING ENTER, YOU CONSIDERED YOURSELF WARNED....\U000026A0\033[0m ")
 
         # URL of the "Never Gonna Give You Up" YouTube video
         video_url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
@@ -1117,9 +1107,14 @@ while True:
         # Open the default web browser and play the video
         webbrowser.open(video_url)
 
-        time.sleep(5)
+        time.sleep(6)
+        if operating_system == 'win32':
+            os.system('cls')
+        if operating_system == 'linux' or operating_system == 'darwin':
+            os.system('clear')
+        display_top_secret_intro()
 
-        print(f"""
+        print(f"""\033[31m
 ⡀⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣶⣤⣄⣀⠀⠀⠀⠀⠀⠀⠀⠉⠁⠀⣀⣀⠀⣀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄⡀⠀⠀⠀
 ⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⣿⣿⣿⣛⣿⣿⣷⣿⣿⣯⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣏⠉⣿⠉⢹⠟⢉⠉⢻⣿⠉⢻⠋⠙⡏⣿⠋⢻⡏⠉⣿⠉⣉⣻⠀
 ⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣻⡀⠈⢀⣿⠀⢸⠀⠀⣿⠀⢸⠀⠰⣿⣿⠀⢸⠁⢀⡟⠀⢹⣿⠀
@@ -1141,7 +1136,7 @@ while True:
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⡞⣿⠀⠀⠀⠀⠀⢹⠀⢹⡀⢈⡏⠀⣿⠀⢸⡇⠀⣿⡟⠀⢸⣿⠀⢸⣶⡇⠀⢳⠀⢸
 ⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⢀⣰⠃⢹⡆⠀⠀⠀⠀⢸⠀⢠⠀⠛⡇⠀⣿⠀⢸⡇⠀⣿⡇⠀⢸⣿⠀⢠⣬⡇⠀⢸⠀⢸
 ⠀⠀⠀⠀⠀⠀⠀⠙⠛⠛⠋⠉⠀⠺⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠶⠞⠋⠀⠀⠀⢿⠀⠀⠀⠀⣸⠀⢸⠀⢰⣧⠀⠛⠀⣸⡇⠀⠛⣧⠀⠘⢻⠀⠘⠛⡇⠀⠚⠀⢸
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠆⠀⠀⠀⠿⠓⠛⠓⠛⠉⠙⠒⠚⠉⠛⣛⡚⠛⠛⠛⠛⠛⠓⡚⠛⠛⠓⠛⠉
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠆⠀⠀⠀⠿⠓⠛⠓⠛⠉⠙⠒⠚⠉⠛⣛⡚⠛⠛⠛⠛⠛⠓⡚⠛⠛⠓⠛⠉\033[0m
 """)
         print("\033[36m\nDid you really think I would share those kind of documents? LOL")
         input("\033[32mPress Enter to continue...\033[0m")
@@ -1151,4 +1146,5 @@ while True:
             os.system('cls')
         if operating_system == 'linux' or operating_system == 'darwin':
             os.system('clear')
+        display_intro()
         farewell()

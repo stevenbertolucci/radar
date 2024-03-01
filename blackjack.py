@@ -20,7 +20,6 @@ def display_blackjack_intro():
     print(
         f"{green_color_profile}------------------------------------------------------------------")
     blackjack_ascii = f"""{green_color_profile}
-
              _     _            _    _            _    _ 
             | |   | |          | |  (_)          | |  | |
             | |__ | | __ _  ___| | ___  __ _  ___| | _| |
@@ -29,8 +28,7 @@ def display_blackjack_intro():
             |_.__/|_|\__,_|\___|_|\_\ |\__,_|\___|_|\_(_)
                                    _/ |                  
                                   |__/                   
-
-    {reset_color_profile}"""
+{reset_color_profile}"""
 
     print(blackjack_ascii)
 
