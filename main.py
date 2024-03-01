@@ -26,6 +26,7 @@ from temperature import temperature_colors
 from conditions import condition
 from uv_index import uv_index
 from blackjack import play_blackjack
+from help import help_menu
 from bs4 import BeautifulSoup
 # Windows when using pycaw
 from ctypes import cast, POINTER
@@ -947,6 +948,32 @@ while True:
     while True:
 
         user_choice = input(f"{yellow_color_profile}Pick an option: {reset_color_profile}")
+
+        if user_choice.lower() == '-h' or user_choice.lower() == '-help' or user_choice.lower() == '--help':
+            if operating_system == 'win32':
+                os.system('cls')
+            if operating_system == 'linux' or operating_system == 'darwin':
+                os.system('clear')
+
+            help_menu(user_choice)
+            if operating_system == 'win32':
+                os.system('cls')
+            if operating_system == 'linux' or operating_system == 'darwin':
+                os.system('clear')
+
+            display_intro()
+            print("\n\t[1] Weather\n")
+            print(f"\t[2] News for {city_name}\n")
+            print("\t[3] Search the News\n")
+            print("\t[4] Time Zone\n")
+            print("\t[5] Tax Rates\n")
+            print("\t[6] Enter New Zip Code\n")
+            print("\t[7] Generate Password\n")
+            print("\t[8] Blackjack!\n")
+            print("\t[9] FBI Top Secret Documents\n")
+            print("\t[10] Exit\n")
+
+            continue
 
         if user_choice.lower() == 'quit' or user_choice.lower() == 'exit':
             if operating_system == 'win32':
