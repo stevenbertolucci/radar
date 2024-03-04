@@ -88,14 +88,27 @@ def display_intro():
                                      ██████╔╝ ███████║ ██║  ██║ ███████║ ██████╔╝
                                      ██╔══██╗ ██╔══██║ ██║  ██║ ██╔══██║ ██╔══██╗
                                      ██║  ██║ ██║  ██║ ██████╔╝ ██║  ██║ ██║  ██║
-                                     ╚═╝  ╚═╝ ╚═╝  ╚═╝ ╚═════╝  ╚═╝  ╚═╝ ╚═╝  ╚═╝  v0.1  
-    {reset_color_profile}"""
+                                     ╚═╝  ╚═╝ ╚═╝  ╚═╝ ╚═════╝  ╚═╝  ╚═╝ ╚═╝  ╚═╝    
+                                                                             v0.1{reset_color_profile}"""
 
     print(radar_ascii)
-    print(f"\t\t\t\t\t{red_color_profile}   Copyrighted by Steven Bertolucci\u00A9")
+    print(f"\t\t\t\t\t     {red_color_profile}   By Steven Bertolucci\u00A9")
     print(
         f"{green_color_profile}-----------------------------------------------------------------------------------------"
         f"-------------------------------{reset_color_profile}")
+
+
+def display_menu():
+    print("\n")
+    print("\t\t\t ╔════════════════════════════════════════════════════════════════╗")
+    print("\t\t\t ║                           Main Menu                            ║")
+    print("\t\t\t ╠═══════════════════════════════╦════════════════════════════════╣")
+    print(f"\t\t\t ║ [1] Weather                   ║ [6] Enter New Zip Code         ║")
+    print(f"\t\t\t ║ [2] News for {city_name:<17}║ [7] Generate Password          ║")
+    print("\t\t\t ║ [3] Search the News           ║ [8] Blackjack!                 ║")
+    print("\t\t\t ║ [4] Time Zone                 ║ [9] FBI Top Secret Documents   ║")
+    print("\t\t\t ║ [5] Tax Rates                 ║ [10] Exit                      ║")
+    print("\t\t\t ╚═══════════════════════════════╩════════════════════════════════╝")
 
 
 def display_weather_intro():
@@ -377,16 +390,24 @@ def get_weather(city):
     if response.status_code == 200:
         clear_selected_line()
         data = response.json()
-        print("\033[36mWeather information for", city + ":\033[0m")
-        print("Name:", data["location"]["name"])
-        print("Region:", data["location"]["region"])
-        print(f"Temperature (F): {temperature_colors(data['current']['temp_f'])}{data['current']['temp_f']}\033[0m")
-        print("Condition:", condition(data["current"]["condition"]["text"]), data["current"]["condition"]["text"], "\033[0m")
-        print("Wind Speed (mph):", data["current"]["wind_mph"])
-        print("Wind Direction:", data["current"]["wind_dir"])
-        print("Humidity:", data["current"]["humidity"], "%")
-        print("Feels Like (F):", data["current"]["feelslike_f"])
-        print("UV Index:", uv_index(data["current"]["uv"]), data["current"]["uv"], "\033[0m")
+        print("\n")
+        print("\t╔═════════════════════════════════════════════════╗")
+        print(f"\t║\033[36m Weather information for {city}:\033[0m{' ' * (23 - len(city))}║")
+        print("\t╠═════════════════════════════════════════════════╣")
+        print(f"\t║ Name: {data['location']['name']}{' ' * (42 - len(data['location']['name']))}║")
+        print(f"\t║ Region: {data['location']['region']}{' ' * (40 - len(data['location']['region']))}║")
+        print(
+            f"\t║ Temperature (F): {temperature_colors(data['current']['temp_f'])}{data['current']['temp_f']}{' ' * (31 - len(str(data['current']['temp_f'])))}\033[0m║")
+        print("\t║ Condition:", condition(data["current"]["condition"]["text"]), data["current"]["condition"]["text"],
+              " " * (34 - len(data["current"]["condition"]["text"])), "\033[0m║")
+        print(f"\t║ Wind Speed (mph): {data['current']['wind_mph']}{' ' * (30 - len(str(data['current']['wind_mph'])))}║")
+        print(f"\t║ Wind Direction: {data['current']['wind_dir']}{' ' * (32 - len(data['current']['wind_dir']))}║")
+        print(f"\t║ Humidity: {data['current']['humidity']}%{' ' * (37 - len(str(data['current']['humidity'])))}║")
+        print(
+            f"\t║ Feels Like (F): {data['current']['feelslike_f']}{' ' * (32 - len(str(data['current']['feelslike_f'])))}║")
+        print("\t║ UV Index:", uv_index(data["current"]["uv"]), data["current"]["uv"],
+              " " * (35 - len(str(data["current"]["uv"]))), "\033[0m║")
+        print("\t╚═════════════════════════════════════════════════╝")
     else:
         clear_selected_line()
         print("Error retrieving weather")
@@ -417,17 +438,28 @@ def get_weather(city):
 
             if response.status_code == 200:
                 data = response.json()
-                print("\033[36mWeather information for", city + ":\033[0m")
-                print("Name:", data["location"]["name"])
-                print("Region:", data["location"]["region"])
-                print(f"Temperature (F): {temperature_colors(data['current']['temp_f'])}{data['current']['temp_f']}\033[0m")
-                print("Condition:", condition(data["current"]["condition"]["text"]), data["current"]["condition"]["text"],
-                      "\033[0m")
-                print("Wind Speed (mph):", data["current"]["wind_mph"])
-                print("Wind Direction:", data["current"]["wind_dir"])
-                print("Humidity:", data["current"]["humidity"], "%")
-                print("Feels Like (F):", data["current"]["feelslike_f"])
-                print("UV Index:", uv_index(data["current"]["uv"]), data["current"]["uv"], "\033[0m")
+                print("\n")
+                print("\t╔═════════════════════════════════════════════════╗")
+                print(f"\t║\033[36m Weather information for {city}:\033[0m{' ' * (23 - len(city))}║")
+                print("\t╠═════════════════════════════════════════════════╣")
+                print(f"\t║ Name: {data['location']['name']}{' ' * (42 - len(data['location']['name']))}║")
+                print(f"\t║ Region: {data['location']['region']}{' ' * (40 - len(data['location']['region']))}║")
+                print(
+                    f"\t║ Temperature (F): {temperature_colors(data['current']['temp_f'])}{data['current']['temp_f']}{' ' * (31 - len(str(data['current']['temp_f'])))}\033[0m║")
+                print("\t║ Condition:", condition(data["current"]["condition"]["text"]),
+                      data["current"]["condition"]["text"],
+                      " " * (34 - len(data["current"]["condition"]["text"])), "\033[0m║")
+                print(
+                    f"\t║ Wind Speed (mph): {data['current']['wind_mph']}{' ' * (30 - len(str(data['current']['wind_mph'])))}║")
+                print(
+                    f"\t║ Wind Direction: {data['current']['wind_dir']}{' ' * (32 - len(data['current']['wind_dir']))}║")
+                print(
+                    f"\t║ Humidity: {data['current']['humidity']}%{' ' * (37 - len(str(data['current']['humidity'])))}║")
+                print(
+                    f"\t║ Feels Like (F): {data['current']['feelslike_f']}{' ' * (32 - len(str(data['current']['feelslike_f'])))}║")
+                print("\t║ UV Index:", uv_index(data["current"]["uv"]), data["current"]["uv"],
+                      " " * (35 - len(str(data["current"]["uv"]))), "\033[0m║")
+                print("\t╚═════════════════════════════════════════════════╝")
             else:
                 print("Error retrieving weather")
 
@@ -658,12 +690,12 @@ def get_news():
                 # Check if there are more pages or exit
                 if end_index >= total_results or end_index >= 100:
                     print("\nNo more articles to display.")
-                    input("\033[32mPress Enter to continue...\033[0m")
+                    input("\033[32mPress Enter to continue... \033[0m")
                     break
 
                 else:
                     # Ask the user to press Enter to continue or exit
-                    usr_keystroke = input("\n\033[32mPress Enter to continue or type 'exit' to exit...\033[0m")
+                    usr_keystroke = input("\n\033[32mPress Enter to continue or type 'exit' to exit... \033[0m")
                     if usr_keystroke.lower() == 'exit':
                         break
 
@@ -700,7 +732,14 @@ def get_time(city, latitude, longitude):
         data = response.json()
         timezone = data.get("timeZone")
         current_time = data.get("time")
-        print(f"\033[36mTime Info for {city}:\033[0m", "\nTime Zone: ", timezone, "\nTime: ", current_time)
+
+        print("\n")
+        print("\t╔══════════════════════════════════════╗")
+        print(f"\t║\033[36m Time Info for {city}:\033[0m{' ' * (22 - len(city))}║")
+        print("\t╠══════════════════════════════════════╣")
+        print(f"\t║ Time Zone: {timezone}{' ' * (26 - len(str(timezone)))}║")
+        print(f"\t║ Time: {current_time}{' ' * (31 - len(str(current_time)))}║")
+        print("\t╚══════════════════════════════════════╝")
     else:
         print(f"Error: {response.status_code}")
 
@@ -732,7 +771,13 @@ def get_time(city, latitude, longitude):
                 data = response.json()
                 timezone = data.get("timeZone")
                 current_time = data.get("time")
-                print(f"\033[36mTime Info for {city}:\033[0m", "\nTime Zone: ", timezone, "\nTime: ", current_time)
+                print("\n")
+                print("\t╔══════════════════════════════════════╗")
+                print(f"\t║\033[36m Time Info for {city}:\033[0m{' ' * (22 - len(city))}║")
+                print("\t╠══════════════════════════════════════╣")
+                print(f"\t║ Time Zone: {timezone}{' ' * (26 - len(str(timezone)))}║")
+                print(f"\t║ Time: {current_time}{' ' * (31 - len(str(current_time)))}║")
+                print("\t╚══════════════════════════════════════╝")
             else:
                 print(f"Error: {response.status_code}")
         else:
@@ -950,7 +995,12 @@ def generate_password():
         characters = lower_chars + upper_chars + special_chars + numbers
         password = ''.join(random.choice(characters) for _ in range(passwd_length))
 
-    print("\nGenerated Password: ", password)
+    top =     "\n  ╔═════════════════════════════════════════════════════════════╗\n"
+    middle = f"  ║ Generated Password: {password:<39} ║\n"
+    bottom = "  ╚═════════════════════════════════════════════════════════════╝"
+
+    print(top + middle + bottom)
+    #print("Generated Password: ", password)
 
     save_password = input("\nWould you like to save the password? (Y/N) ")
 
@@ -996,7 +1046,7 @@ def generate_password():
 
     if not save_password:
         print("\n\033[33mThank you for using password generator!\033[0m")
-        time.sleep(2.5)
+        time.sleep(1.8)
 
     if operating_system == 'win32':
         os.system('cls')
@@ -1052,16 +1102,8 @@ while True:
 
         display_intro()
 
-    print("\n\t[1] Weather\n")
-    print(f"\t[2] News for {city_name}\n")
-    print("\t[3] Search the News\n")
-    print("\t[4] Time Zone\n")
-    print("\t[5] Tax Rates\n")
-    print("\t[6] Enter New Zip Code\n")
-    print("\t[7] Generate Password\n")
-    print("\t[8] Blackjack!\n")
-    print("\t[9] FBI Top Secret Documents\n")
-    print("\t[10] Exit\n")
+    display_menu()
+    print("\n")
 
     while True:
 
@@ -1082,16 +1124,7 @@ while True:
                 os.system('clear')
 
             display_intro()
-            print("\n\t[1] Weather\n")
-            print(f"\t[2] News for {city_name}\n")
-            print("\t[3] Search the News\n")
-            print("\t[4] Time Zone\n")
-            print("\t[5] Tax Rates\n")
-            print("\t[6] Enter New Zip Code\n")
-            print("\t[7] Generate Password\n")
-            print("\t[8] Blackjack!\n")
-            print("\t[9] FBI Top Secret Documents\n")
-            print("\t[10] Exit\n")
+            display_menu()
 
             continue
 
