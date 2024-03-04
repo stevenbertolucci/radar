@@ -414,7 +414,9 @@ def get_weather(city):
 
     while True:
         usr_input = input("\n\033[32mPress Enter to Continue... \033[0m")
-        if usr_input == '-h' or usr_input == '--help' or usr_input == '-help':
+        if usr_input.lower() == 'exit' or usr_input.lower() == 'quit' or usr_input.lower() == 'stop':
+            break
+        if usr_input.lower() == '-h' or usr_input.lower() == '--help' or usr_input.lower() == '-help':
 
             # Clear the screen
             if operating_system == 'win32':
@@ -613,7 +615,7 @@ def get_news():
     while True:
         search_result = input("What would you like to read about? ")
 
-        if search_result == '-h' or search_result == '--help' or search_result == '-help':
+        if search_result.lower() == '-h' or search_result.lower() == '--help' or search_result.lower() == '-help':
             if operating_system == 'win32':
                 os.system('cls')
             if operating_system == 'linux' or operating_system == 'darwin':
@@ -745,7 +747,9 @@ def get_time(city, latitude, longitude):
 
     while True:
         usr_input = input("\n\033[32mPress Enter to continue... \033[0m")
-        if usr_input == '-h' or usr_input == '-help' or usr_input == '--help':
+        if usr_input.lower() == 'exit' or usr_input.lower() == 'quit' or usr_input.lower() == 'stop':
+            break
+        if usr_input.lower() == '-h' or usr_input.lower() == '-help' or usr_input.lower() == '--help':
             if operating_system == 'win32':
                 os.system('cls')
             if operating_system == 'linux' or operating_system == 'darwin':
@@ -879,7 +883,7 @@ def generate_password():
         passwd_length = input("How long would you like the password to be? (Minimum: 8 characters. Maximum: "
                             "32 characters): ")
 
-        if passwd_length == '-h' or passwd_length == '-help' or passwd_length == '--help':
+        if passwd_length.lower() == '-h' or passwd_length.lower() == '-help' or passwd_length.lower() == '--help':
             if operating_system == 'win32':
                 os.system('cls')
             if operating_system == 'linux' or operating_system == 'darwin':
@@ -898,6 +902,7 @@ def generate_password():
 
     # Now convert password to integer
     passwd_length = int(passwd_length)
+
     while True:
         if passwd_length < 8 or passwd_length > 32:
             passwd_length = int(input("Please enter a valid password length: "))
@@ -1046,7 +1051,7 @@ def generate_password():
 
     if not save_password:
         print("\n\033[33mThank you for using password generator!\033[0m")
-        time.sleep(1.8)
+        time.sleep(1.6)
 
     if operating_system == 'win32':
         os.system('cls')
@@ -1283,7 +1288,8 @@ while True:
         usr_input = input("\t\t\t\t\U000026A0  BY HITTING ENTER, YOU CONSIDERED YOURSELF WARNED....\U000026A0\033[0m ")
 
         while True:
-            if usr_input == '-h' or usr_input == '--help' or usr_input == '-help':
+
+            if usr_input.lower() == '-h' or usr_input.lower() == '--help' or usr_input.lower() == '-help':
                 if operating_system == 'win32':
                     os.system('cls')
                 if operating_system == 'linux' or operating_system == 'darwin':
