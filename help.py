@@ -52,28 +52,28 @@ def help_menu(pos):
         print("\t    ║      10. Exit - This option exits the program. You will see a farewell message before       ║")
         print("\t    ║                 the programs exit successfully                                              ║")
         print("\t    ╚═════════════════════════════════════════════════════════════════════════════════════════════╝\n")
-        input("\nPress any key to continue... ")
+        input("\n\033[32mPress Enter to go back... \033[0m")
 
     if pos == 'weather':
         print("Weather Help Menu Coming Soon!")
-        input("Press any key to continue... ")
+        input("\n\033[32mPress Enter to go back... \033[0m")
 
     if pos == 'news':
         print("News Help Menu Coming Soon!")
-        input("Press any key to continue... ")
+        input("\n\033[32mPress Enter to go back... \033[0m")
 
     if pos == 'time':
         print("Time Help Menu Coming Soon!")
-        input("Press any key to continue... ")
+        input("\n\033[32mPress Enter to go back... \033[0m")
 
     if pos == 'password':
         print("Password Help Menu Coming Soon!")
-        input("Press any key to continue... ")
+        input("\n\033[32mPress Enter to go back... \033[0m")
 
     if pos == 'blackjack':
         print("Blackjack Help Menu Coming Soon!")
-        input("Press any key to continue... ")
+        input("\n\033[32mPress Enter to go back... \033[0m")
 
     if pos == 'rickroll':
         print("FBI Help Menu Coming Soon!")
-        input("Press any key to continue... ")
+        input("\n\033[32mPress Enter to go back... \033[0m")
