@@ -1085,7 +1085,7 @@ def play_blackjack():
                         print("Dealer's hand: \n", dealer_hand)
                         print("Dealer's Total: ", dealer_total)
                         print("\nYour hand: \n", player_hand)
-                        print("Player's Total: ", player_total)
+                        print("Player's Total: ", player_total2)
                     else:
                         break
 
