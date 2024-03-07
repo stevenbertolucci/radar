@@ -85,7 +85,7 @@ def help_menu(pos):
         print("\t    ║                the time zone of another city, choose option #6 in the main                  ║")
         print("\t    ║                           menu and enter your preferred zip code.                           ║")
         print("\t    ║                                                                                             ║")
-        print("\t    ║                              Current time is in military time.                              ║")
+        print("\t    ║                     Current time is in military time and standard time.                     ║")
         print("\t    ╚═════════════════════════════════════════════════════════════════════════════════════════════╝\n")
         input("\n\033[32mPress Enter to go back... \033[0m")
 

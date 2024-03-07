@@ -119,9 +119,9 @@ def display_weather_intro():
                               _   _               
                              | | | |              
           __      _____  __ _| |_| |__   ___ _ __ 
-          \ \ /\ / / _ \/ _` | __| '_ \ / _ \ '__|
-           \ V  V /  __/ (_| | |_| | | |  __/ |   
-            \_/\_/ \___|\__,_|\__|_| |_|\___|_|   
+          \\ \\ /\\ / / _ \\/ _` | __| '_ \\ / _ \\ '__|
+           \\ V  V /  __/ (_| | |_| | | |  __/ |   
+            \\_/\\_/ \\___|\\__,_|\\__|_| |_|\\___|_|   
     {reset_color_profile}"""
 
     print(weather_ascii)
@@ -137,9 +137,9 @@ def display_local_news_intro():
     local_news_ascii = f"""
         __                     __   _   __                 
        / /   ____  _________ _/ /  / | / /__ _      _______
-      / /   / __ \/ ___/ __ `/ /  /  |/ / _ \ | /| / / ___/
+      / /   / __ \\/ ___/ __ `/ /  /  |/ / _ \\ | /| / / ___/
      / /___/ /_/ / /__/ /_/ / /  / /|  /  __/ |/ |/ (__  ) 
-    /_____/\____/\___/\__,_/_/  /_/ |_/\___/|__/|__/____/  
+    /_____/\\____/\\___/\\__,_/_/  /_/ |_/\\___/|__/|__/____/  
     {reset_color_profile}"""
 
     print(local_news_ascii)
@@ -155,9 +155,9 @@ def display_news_intro():
     news_ascii = f"""
          _   __                 
         / | / /__ _      _______
-       /  |/ / _ \ | /| / / ___/
+       /  |/ / _ \\ | /| / / ___/
       / /|  /  __/ |/ |/ (__  ) 
-     /_/ |_/\___/|__/|__/____/  
+     /_/ |_/\\___/|__/|__/____/  
     {reset_color_profile}"""
 
     print(news_ascii)
@@ -175,10 +175,10 @@ def display_time_intro():
          .----------------.  .----------------.  .----------------.  .----------------. 
         | .--------------. || .--------------. || .--------------. || .--------------. |
         | |  _________   | || |     _____    | || | ____    ____ | || |  _________   | |
-        | | |  _   _  |  | || |    |_   _|   | || ||_   \  /   _|| || | |_   ___  |  | |
-        | | |_/ | | \_|  | || |      | |     | || |  |   \/   |  | || |   | |_  \_|  | |
-        | |     | |      | || |      | |     | || |  | |\  /| |  | || |   |  _|  _   | |
-        | |    _| |_     | || |     _| |_    | || | _| |_\/_| |_ | || |  _| |___/ |  | |
+        | | |  _   _  |  | || |    |_   _|   | || ||_   \\  /   _|| || | |_   ___  |  | |
+        | | |_/ | | \\_|  | || |      | |     | || |  |   \\/   |  | || |   | |_  \\_|  | |
+        | |     | |      | || |      | |     | || |  | |\\  /| |  | || |   |  _|  _   | |
+        | |    _| |_     | || |     _| |_    | || | _| |_\\/_| |_ | || |  _| |___/ |  | |
         | |   |_____|    | || |    |_____|   | || ||_____||_____|| || | |_________|  | |
         | |              | || |              | || |              | || |              | |
         | '--------------' || '--------------' || '--------------' || '--------------' |
@@ -198,9 +198,9 @@ def display_tax_intro():
 
     tax_ascii = """
           _____                             ___             _             
-         |_   _|  __ _    __ __     o O O  | _ \   __ _    | |_     ___   
-           | |   / _` |   \ \ /    o       |   /  / _` |   |  _|   / -_)  
-          _|_|_  \__,_|   /_\_\   TS__[O]  |_|_\  \__,_|   _\__|   \___|  
+         |_   _|  __ _    __ __     o O O  | _ \\   __ _    | |_     ___   
+           | |   / _` |   \\ \\ /    o       |   /  / _` |   |  _|   / -_)  
+          _|_|_  \\__,_|   /_\\_\\   TS__[O]  |_|_\\  \\__,_|   _\\__|   \\___|  
         _|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"| {======|_|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|_|\"\"\"\"\"|
         "`-0-0-'"`-0-0-'"`-0-0-'./o--000'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-' 
     """ + reset_color_profile
@@ -218,8 +218,8 @@ def display_password_intro():
 
     password_ascii = f"""
          __        __   __        __   __   __      __   ___       ___  __       ___  __   __  
-        |__)  /\  /__` /__` |  | /  \ |__) |  \    / _` |__  |\ | |__  |__)  /\   |  /  \ |__) 
-        |    /~~\ .__/ .__/ |/\| \__/ |  \ |__/    \__> |___ | \| |___ |  \ /~~\  |  \__/ |  \ 
+        |__)  /\\  /__` /__` |  | /  \\ |__) |  \\    / _` |__  |\\ | |__  |__)  /\\   |  /  \\ |__) 
+        |    /~~\\ .__/ .__/ |/\\| \\__/ |  \\ |__/    \\__> |___ | \\| |___ |  \\ /~~\\  |  \\__/ |  \\ 
     {reset_color_profile}"""
 
 
@@ -237,9 +237,9 @@ def display_top_secret_intro():
 
     top_secret_ascii = f"""
       ___ ___ ___   _____ ___  ___   ___ ___ ___ ___ ___ _____   ___   ___   ___ _   _ __  __ ___ _  _ _____ ___ 
-     | __| _ )_ _| |_   _/ _ \| _ \ / __| __/ __| _ \ __|_   _| |   \ / _ \ / __| | | |  \/  | __| \| |_   _/ __|
-     | _|| _ \| |    | || (_) |  _/ \__ \ _| (__|   / _|  | |   | |) | (_) | (__| |_| | |\/| | _|| .` | | | \__ \\
-     |_| |___/___|   |_| \___/|_|   |___/___\___|_|_\___| |_|   |___/ \___/ \___|\___/|_|  |_|___|_|\_| |_| |___/
+     | __| _ )_ _| |_   _/ _ \\| _ \\ / __| __/ __| _ \\ __|_   _| |   \\ / _ \\ / __| | | |  \\/  | __| \\| |_   _/ __|
+     | _|| _ \\| |    | || (_) |  _/ \\__ \\ _| (__|   / _|  | |   | |) | (_) | (__| |_| | |\\/| | _|| .` | | | \\__ \\
+     |_| |___/___|   |_| \\___/|_|   |___/___\\___|_|_\\___| |_|   |___/ \\___/ \\___|\\___/|_|  |_|___|_|\\_| |_| |___/
     {reset_color_profile}"""
 
     print(top_secret_ascii)
@@ -333,7 +333,7 @@ def clear_selected_line():
     sys.stdout.write("\033[K")       # Clear line from cursor position to the end
 
 
-def get_location_details():
+def get_location_details(user_input):
     """
     Function get_location_details gathers more details regarding
     the location of the zip code that the user inputted. This API
@@ -352,6 +352,8 @@ def get_location_details():
     google_api = "AIzaSyBLkIviPn0C-P7gK2civVkI4hoUXvfv3ck"
     url = f"https://maps.googleapis.com/maps/api/geocode/json?address={user_input}&key={google_api}"
     response = requests.get(url)
+
+    city_name = None
 
     if response.status_code == 200:
         data = response.json()
@@ -373,6 +375,35 @@ def get_location_details():
                     if city and latitude is not None and longitude is not None:
                         break
 
+    if city_name is None:
+        while True:
+            user_input = input("\033[31mThat zip code does not exist in my database. Please input a different zip code:"
+                               "\033[0m ")
+            url = f"https://maps.googleapis.com/maps/api/geocode/json?address={user_input}&key={google_api}"
+            response = requests.get(url)
+
+            if response.status_code == 200:
+                data = response.json()
+                # print(data)
+                if data['status'] == 'OK':
+                    city = None
+                    latitude = None
+                    longitude = None
+
+                    for result in data['results']:
+                        for component in result['address_components']:
+                            if 'locality' in component['types']:
+                                city = component['long_name']
+                                city_name = component['long_name']
+                            if 'geometry' in result and 'location' in result['geometry']:
+                                latitude = result['geometry']['location']['lat']
+                                longitude = result['geometry']['location']['lng']
+
+                            if city and latitude is not None and longitude is not None:
+                                break
+                    break
+            else:
+                continue
 
 def get_weather(city):
     """
@@ -410,7 +441,7 @@ def get_weather(city):
         print("\t╚═════════════════════════════════════════════════╝")
     else:
         clear_selected_line()
-        print("Error retrieving weather")
+        print("This city is not in our database just yet. Sorry about that.")
 
     while True:
         usr_input = input("\n\033[32mPress Enter to Continue... \033[0m")
@@ -720,7 +751,7 @@ def get_time(city, latitude, longitude):
 
     position = "time"
     print(f"\033[31mRetrieving time information for {city}. Please wait... \033[0m")
-    time.sleep(0.5)
+    time.sleep(0.2)
     url = f"https://timeapi.io/api/Time/current/coordinate?latitude={latitude}&longitude={longitude}"
 
     parameters = {
@@ -732,15 +763,30 @@ def get_time(city, latitude, longitude):
     if response.status_code == 200:
         clear_selected_line()
         data = response.json()
+        # print(data)
         timezone = data.get("timeZone")
         current_time = data.get("time")
+        day_of_week = data.get("dayOfWeek")
+        date = data.get("date")
+
+        # Splitting military time to hours and minutes
+        hours, minutes = map(int, current_time.split(':'))
+
+        # Converting to standard time
+        standard_hours = hours if hours <= 12 else hours - 12
+        am_pm = 'AM' if hours < 12 else 'PM'
 
         print("\n")
         print("\t╔══════════════════════════════════════╗")
         print(f"\t║\033[36m Time Info for {city}:\033[0m{' ' * (22 - len(city))}║")
         print("\t╠══════════════════════════════════════╣")
         print(f"\t║ Time Zone: {timezone}{' ' * (26 - len(str(timezone)))}║")
-        print(f"\t║ Time: {current_time}{' ' * (31 - len(str(current_time)))}║")
+        print(f"\t║                                      ║")
+        print(f"\t║ Day of the Week: {day_of_week}{' ' * (20 - len(str(day_of_week)))}║")
+        print(f"\t║ Date: {date}{' ' * (31 - len(str(date)))}║")
+        print(f"\t║                                      ║")
+        print(f"\t║ Military Time: {current_time}{' ' * (22 - len(str(current_time)))}║")
+        print(f"\t║ Standard Time: {standard_hours}:{minutes:02d} {am_pm}{' ' * (16 - len(str(standard_hours)))}║")
         print("\t╚══════════════════════════════════════╝")
     else:
         print(f"Error: {response.status_code}")
@@ -775,12 +821,27 @@ def get_time(city, latitude, longitude):
                 data = response.json()
                 timezone = data.get("timeZone")
                 current_time = data.get("time")
+                day_of_week = data.get("dayOfWeek")
+                date = data.get("date")
+
+                # Splitting military time to hours and minutes
+                hours, minutes = map(int, current_time.split(':'))
+
+                # Converting to standard time
+                standard_hours = hours if hours <= 12 else hours - 12
+                am_pm = 'AM' if hours < 12 else 'PM'
+
                 print("\n")
                 print("\t╔══════════════════════════════════════╗")
                 print(f"\t║\033[36m Time Info for {city}:\033[0m{' ' * (22 - len(city))}║")
                 print("\t╠══════════════════════════════════════╣")
                 print(f"\t║ Time Zone: {timezone}{' ' * (26 - len(str(timezone)))}║")
-                print(f"\t║ Time: {current_time}{' ' * (31 - len(str(current_time)))}║")
+                print(f"\t║                                      ║")
+                print(f"\t║ Day of the Week: {day_of_week}{' ' * (20 - len(str(day_of_week)))}║")
+                print(f"\t║ Date: {date}{' ' * (31 - len(str(date)))}║")
+                print(f"\t║                                      ║")
+                print(f"\t║ Military Time: {current_time}{' ' * (22 - len(str(current_time)))}║")
+                print(f"\t║ Standard Time: {standard_hours}:{minutes:02d} {am_pm}{' ' * (16 - len(str(standard_hours)))}║")
                 print("\t╚══════════════════════════════════════╝")
             else:
                 print(f"Error: {response.status_code}")
@@ -950,7 +1011,7 @@ def generate_password():
 
     # Let user know that I am generating password
     print("\033[31mGenerating password...\033[0m")
-    time.sleep(1.5)
+    time.sleep(0.7)
     clear_selected_line()
 
     # If users do not want special characters, uppercase letters, and numbers,
@@ -1065,7 +1126,6 @@ def generate_password():
 #                                                                                                                      #
 ########################################################################################################################
 
-
 # Display Intro banner
 display_intro()
 print(f"\n\t\t\t\t{purple_color_profile}    ASCII text was generated using a web-based generator: "
@@ -1096,7 +1156,7 @@ while True:
         break
 
 # Get more details regarding zip code (city name, latitude, and longitude)
-get_location_details()
+get_location_details(user_input)
 
 while True:
     if has_displayed_intro:
@@ -1220,7 +1280,7 @@ while True:
                 continue
             else:
                 # Get more details regarding zip code (city name, latitude, and longitude)
-                get_location_details()
+                get_location_details(user_input)
                 break
 
     elif user_choice == '7':
