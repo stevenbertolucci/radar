@@ -1126,6 +1126,11 @@ def generate_password():
 #                                                                                                                      #
 ########################################################################################################################
 
+if operating_system == 'win32':
+    os.system('cls')
+if operating_system == 'linux' or operating_system == 'darwin':
+    os.system('clear')
+
 # Display Intro banner
 display_intro()
 print(f"\n\t\t\t\t{purple_color_profile}    ASCII text was generated using a web-based generator: "
