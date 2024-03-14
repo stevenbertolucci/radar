@@ -1,3 +1,5 @@
+# Source: https://www.weatherapi.com/docs/weather_conditions.csv
+
 weatherDict = {
 
     1000: "Sunny",
