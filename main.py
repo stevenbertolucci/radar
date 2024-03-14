@@ -12,6 +12,23 @@
 #
 #  -------------------------------------------------------------------
 
+# --------------------------------------------------------------------
+# Citations:
+# ASCII banner art: https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
+# ANSI Color Codes Chart: https://talyian.github.io/ansicolors/
+# ANSI Escape Code: https://en.wikipedia.org/wiki/ANSI_escape_code
+# Retrieving Operating System Info: https://www.w3resource.com/python-exercises/python-basic-exercise-43.php
+# Clearing screen: https://www.geeksforgeeks.org/clear-screen-python/
+# Current date time: https://docs.python.org/3/library/datetime.html
+# URL Lib: https://realpython.com/urllib-request/
+# Web Scraping using Beautiful Soup: https://www.geeksforgeeks.org/find-the-text-of-the-given-tag-using-beautifulsoup/
+# Getting path name of the user: https://docs.python.org/3/library/os.path.html
+# Pycaw: https://pypi.org/project/pycaw-rf/20210207/
+# Controlling volume on Linux: https://askubuntu.com/questions/689521/control-volume-using-python-script
+# Controlling volume on Mac: https://excessivelyadequate.com/posts/vol.html#:~:text=Thanks%20to%20AppleScript%2C%20the%20amount,utility%20executes%20AppleScript%20code%2C%20running%E2%80%A6&text=%E2%80%A6will%20turn%20the%20volume%20up,is%20interpreted%20as%20a%20percentage.
+# webbrowser: https://docs.python.org/3/library/webbrowser.html
+# --------------------------------------------------------------------
+
 import os
 import random
 import sys
@@ -1335,14 +1352,14 @@ while True:
             # Unmute the volume
             subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "unmute"])
 
-            # Increase volume by 10%
+            # Increase volume by 100%
             subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "100%+"])
 
         if operating_system == 'darwin':
             # Unmute the volume
             subprocess.call(["osascript", "-e", "set volume without output muted"])
 
-            # Increase volume by 10%
+            # Increase volume by 100%
             subprocess.call(
                 ["osascript", "-e", "set volume output volume (output volume of (get volume settings) + 100)"])
 
