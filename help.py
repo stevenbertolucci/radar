@@ -142,5 +142,10 @@ def help_menu(pos):
         input("\n\033[32mPress Enter to go back... \033[0m")
 
     if pos == 'rickroll':
-        print("FBI Help Menu Coming Soon!")
+        print("\n")
+        print("\t    ╔═════════════════════════════════════════════════════════════════════════════════════════════╗")
+        print("\t    ║                                 FBI Top Secret Documents                                    ║")
+        print("\t    ║                                                                                             ║")
+        print("\t    ║       This program displays top-secret files from the FBI servers. Enter if you dare!       ║")
+        print("\t    ╚═════════════════════════════════════════════════════════════════════════════════════════════╝\n")
         input("\n\033[32mPress Enter to go back... \033[0m")
