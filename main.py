@@ -27,6 +27,7 @@
 # Controlling volume on Linux: https://askubuntu.com/questions/689521/control-volume-using-python-script
 # Controlling volume on Mac: https://excessivelyadequate.com/posts/vol.html#:~:text=Thanks%20to%20AppleScript%2C%20the%20amount,utility%20executes%20AppleScript%20code%2C%20running%E2%80%A6&text=%E2%80%A6will%20turn%20the%20volume%20up,is%20interpreted%20as%20a%20percentage.
 # webbrowser: https://docs.python.org/3/library/webbrowser.html
+# Rick roll art: https://emojicombos.com/rick-roll-ascii-art
 # --------------------------------------------------------------------
 
 import os
